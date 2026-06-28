@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.aston</groupId>
+    <artifactId>FinalJavaProject</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.43.0</version>
+                <configuration>
+                    <java>
+                        <includes>
+                            <include>src/main/java/**/*.java</include>
+                            <include>src/test/java/**/*.java</include>
+                        </includes>
+                        <eclipse>
+                            <file>${project.basedir}/config/formatter/eclipse-formatter-config.xml</file>
+                        </eclipse>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check-style</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>io.github.phillipuniverse</groupId>
+                <artifactId>githook-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <configuration>
+                    <hooks>
+                        <pre-commit>
+                            <![CDATA[
+                            echo "===================================================="
+                            echo "🔍 Запуск проверки форматирования кода (Spotless)..."
+                            echo "===================================================="
+
+                            # Возвращаемся в корень проекта, откуда бы ни был запущен коммит
+                            cd "$(git rev-parse --show-toplevel)"
+
+                            # Определяем операционную систему
+                            OS_NAME=$(uname -s 2>/dev/null || echo "Windows")
+
+                            if [[ "$OS_NAME" == *"NT"* || "$OS_NAME" == *"MINGW"* || "$OS_NAME" == *"CYGWIN"* || "$OS_NAME" == "Windows" ]]; then
+                                echo "🪟 Выравнивание окружения для Windows..."
+                                if [ -f "./mvnw.cmd" ]; then
+                                    echo "📦 Используем локальный mvnw.cmd..."
+                                    # Запускаем через cmd.exe, чтобы Windows правильно обработал батник
+                                    cmd.exe /c "mvnw.cmd spotless:check"
+                                else
+                                    echo "❌ [ОШИБКА] Файл mvnw.cmd не найден!"
+                                    exit 1
+                                fi
+                            else
+                                echo "🍎/🐧 Выравнивание окружения для macOS/Linux..."
+                                if [ -f "./mvnw" ]; then
+                                    echo "📦 Используем локальный ./mvnw..."
+                                    ./mvnw spotless:check
+                                else
+                                    echo "❌ [ОШИБКА] Файл mvnw не найден!"
+                                    exit 1
+                                fi
+                            fi
+
+                            MAVEN_STATUS=$?
+
+                            if [ $MAVEN_STATUS -ne 0 ]; then
+                                echo ""
+                                echo "❌ [ОШИБКА] Коммит заблокирован!"
+                                echo "===================================================="
+                                echo " Нарушен стиль кодирования (Eclipse Formatter)."
+                                echo " 👉 Примените автоформат командой:"
+                                echo "    На Mac/Linux:  ./mvnw spotless:apply"
+                                echo "    На Windows:    mvnw spotless:apply"
+                                echo "===================================================="
+                                exit 1
+                            fi
+
+                            echo "✅ Проверка пройдена успешно. Создаю коммит..."
+                            ]]>
+                        </pre-commit>
+                    </hooks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-githooks</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
