@@ -6,7 +6,6 @@ public class Student {
     private final String recordBookNumber;
 
     public Student(String groupNumber, double averageGrade, String recordBookNumber) {
-        // Защита от NPE и пустых строк (проверяем обе переменные сразу)
         if (groupNumber == null || groupNumber.trim().isEmpty()) {
             throw new IllegalArgumentException("Номер группы не может быть пустым или равным null.");
         }
@@ -23,14 +22,17 @@ public class Student {
     }
 
     public String getGroupNumber() {
+
         return groupNumber;
     }
 
     public double getAverageGrade() {
+
         return averageGrade;
     }
 
     public String getRecordBookNumber() {
+
         return recordBookNumber;
     }
 
