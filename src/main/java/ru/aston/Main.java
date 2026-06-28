@@ -1,7 +1,5 @@
 package ru.aston;
 
-import ru.aston.model.Barrel;
-
 public class Main {
     public static void main(String[] args) {
         System.out.printf("Hello and welcome!");
