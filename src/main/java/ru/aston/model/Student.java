@@ -13,13 +13,18 @@ public class Student {
 		this(builder.groupNumber, builder.averageGrade, builder.recordBookNumber);
 	}
 
-	public Student(@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber) {
+	public Student(
+	        @NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
+	) {
 		if (averageGrade < 0.0 || averageGrade > 5.0) {
-			throw new IllegalArgumentException("Средний балл должен быть в диапазоне от 0.0 до 5.0. Передано: " + averageGrade);
+			throw new IllegalArgumentException(
+			        "Средний балл должен быть в диапазоне от 0.0 до 5.0. Передано: " + averageGrade
+			);
 		}
 
 		this.groupNumber = Objects.requireNonNull(groupNumber, "Номер группы должен быть указан").trim();
-		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан").trim();
+		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан")
+		        .trim();
 
 		if (this.groupNumber.isEmpty()) {
 			throw new IllegalArgumentException("Номер группы не может быть пустым");
@@ -46,8 +51,8 @@ public class Student {
 	@Override
 	public String toString() {
 		return String.format(
-				"Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade,
-				recordBookNumber
+		        "Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade,
+		        recordBookNumber
 		);
 	}
 

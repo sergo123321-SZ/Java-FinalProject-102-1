@@ -21,7 +21,10 @@ public class Car {
 
 		int currentYear = Year.now().getValue();
 		if (productionYear < 1886 || productionYear > currentYear) {
-			throw new IllegalArgumentException("Некорректный год производства. Должен быть от 1886 до текущего года (" + currentYear + "). Передано: " + productionYear);
+			throw new IllegalArgumentException(
+			        "Некорректный год производства. Должен быть от 1886 до текущего года (" + currentYear
+			                + "). Передано: " + productionYear
+			);
 		}
 
 		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");

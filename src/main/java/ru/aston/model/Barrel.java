@@ -1,6 +1,7 @@
 package ru.aston.model;
 
 import java.util.Objects;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Barrel {
@@ -45,7 +46,7 @@ public class Barrel {
 	@Override
 	public String toString() {
 		return String.format(
-				"Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial
+		        "Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial
 		);
 	}
 
