@@ -1,8 +1,9 @@
 package ru.aston.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
-import org.jetbrains.annotations.NotNull;
 
 public class Barrel {
 	private final double volume;
@@ -17,9 +18,7 @@ public class Barrel {
 
 		this.volume = volume;
 		this.storedMaterial = Objects.requireNonNull(storedMaterial, "Хранимый материал должен быть указан");
-		this.barrelMaterial = Objects.requireNonNull(barrelMaterial, "Материал бочки должен быть указан").trim();
-
-
+		this.barrelMaterial = Objects.requireNonNull(barrelMaterial, "Материал бочки должен быть указан");
 	}
 
 	public double getVolume() {
@@ -37,7 +36,7 @@ public class Barrel {
 	@Override
 	public String toString() {
 		return String.format(
-		        "Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial
+				"Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial
 		);
 	}
 

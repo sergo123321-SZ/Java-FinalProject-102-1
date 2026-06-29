@@ -14,7 +14,7 @@ public class Student {
 	}
 
 	public Student(
-	        @NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
+			@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
 	) {
 
 
@@ -38,8 +38,8 @@ public class Student {
 	@Override
 	public String toString() {
 		return String.format(
-		        "Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade,
-		        recordBookNumber
+				"Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade,
+				recordBookNumber
 		);
 	}
 
