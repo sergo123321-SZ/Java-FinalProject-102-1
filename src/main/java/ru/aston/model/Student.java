@@ -51,17 +51,17 @@ public class Student {
 		public Builder() {
 		}
 
-		public Builder groupNumber(String groupNumber) {
+		public Builder setGroupNumber(String groupNumber) {
 			this.groupNumber = groupNumber;
 			return this;
 		}
 
-		public Builder averageGrade(double averageGrade) {
+		public Builder setAverageGrade(double averageGrade) {
 			this.averageGrade = averageGrade;
 			return this;
 		}
 
-		public Builder recordBookNumber(String recordBookNumber) {
+		public Builder setRecordBookNumber(String recordBookNumber) {
 			this.recordBookNumber = recordBookNumber;
 			return this;
 		}

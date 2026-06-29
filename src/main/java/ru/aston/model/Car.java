@@ -47,17 +47,17 @@ public class Car {
 		public Builder() {
 		}
 
-		public Builder power(int power) {
+		public Builder setPower(int power) {
 			this.power = power;
 			return this;
 		}
 
-		public Builder model(String model) {
+		public Builder setModel(String model) {
 			this.model = model;
 			return this;
 		}
 
-		public Builder productionYear(int productionYear) {
+		public Builder setProductionYear(int productionYear) {
 			this.productionYear = productionYear;
 			return this;
 		}

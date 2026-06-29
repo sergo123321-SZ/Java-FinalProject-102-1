@@ -48,17 +48,17 @@ public class Barrel {
 		public Builder() {
 		}
 
-		public Builder volume(double volume) {
+		public Builder setVolume(double volume) {
 			this.volume = volume;
 			return this;
 		}
 
-		public Builder storedMaterial(String storedMaterial) {
+		public Builder setStoredMaterial(String storedMaterial) {
 			this.storedMaterial = storedMaterial;
 			return this;
 		}
 
-		public Builder barrelMaterial(String barrelMaterial) {
+		public Builder setBarrelMaterial(String barrelMaterial) {
 			this.barrelMaterial = barrelMaterial;
 			return this;
 		}
