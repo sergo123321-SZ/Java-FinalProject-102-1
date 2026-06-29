@@ -17,7 +17,6 @@ public class Car {
 	public Car(final int power, @NotNull final String model, final int productionYear) {
 
 
-
 		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");
 		this.power = power;
 		this.productionYear = productionYear;

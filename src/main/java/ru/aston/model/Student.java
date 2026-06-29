@@ -18,7 +18,6 @@ public class Student {
 	) {
 
 
-
 		this.groupNumber = Objects.requireNonNull(groupNumber, "Номер группы должен быть указан");
 		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан");
 		this.averageGrade = averageGrade;
