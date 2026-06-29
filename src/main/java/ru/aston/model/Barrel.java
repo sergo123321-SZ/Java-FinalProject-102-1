@@ -36,7 +36,6 @@ public class Barrel {
 
     @Override
     public String toString() {
-        // Перевели строку вывода характеристик для красоты логов в консоли
         return String.format("Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]",
                 volume, storedMaterial, barrelMaterial);
     }

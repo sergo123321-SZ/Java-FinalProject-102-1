@@ -40,7 +40,6 @@ public class Car {
 
     @Override
     public String toString() {
-        // Перевели и строку вывода характеристик для красоты логов
         return String.format("Автомобиль [Модель: %s, Мощность: %d л.с., Год: %d]", model, power, productionYear);
     }
 }
