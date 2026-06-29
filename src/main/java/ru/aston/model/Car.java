@@ -7,8 +7,8 @@ public class Car {
 	private final String model;
 	private final int productionYear;
 
-	public Car(int power, String model, int productionYear) {
-		if (model == null || model.trim().isEmpty()) {
+	public Car(final int power, final String model, final int productionYear) {
+		if (model == null || model.isBlank()) {
 			throw new IllegalArgumentException("Модель автомобиля не может быть пустой или равной null");
 		}
 
@@ -24,7 +24,7 @@ public class Car {
 		}
 
 		this.power = power;
-		this.model = model.trim();
+		this.model = model;
 		this.productionYear = productionYear;
 	}
 

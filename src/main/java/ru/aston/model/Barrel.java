@@ -5,11 +5,11 @@ public class Barrel {
 	private final String storedMaterial;
 	private final String barrelMaterial;
 
-	public Barrel(double volume, String storedMaterial, String barrelMaterial) {
-		if (storedMaterial == null || storedMaterial.trim().isEmpty()) {
+	public Barrel(final double volume, final String storedMaterial, final String barrelMaterial) {
+		if (storedMaterial == null || storedMaterial.isBlank()) {
 			throw new IllegalArgumentException("Хранимый материал не может быть пустым или равным null");
 		}
-		if (barrelMaterial == null || barrelMaterial.trim().isEmpty()) {
+		if (barrelMaterial == null || barrelMaterial.isBlank()) {
 			throw new IllegalArgumentException("Материал бочки не может быть пустым или равным null");
 		}
 
@@ -18,8 +18,8 @@ public class Barrel {
 		}
 
 		this.volume = volume;
-		this.storedMaterial = storedMaterial.trim();
-		this.barrelMaterial = barrelMaterial.trim();
+		this.storedMaterial = storedMaterial;
+		this.barrelMaterial = barrelMaterial;
 	}
 
 	public double getVolume() {
