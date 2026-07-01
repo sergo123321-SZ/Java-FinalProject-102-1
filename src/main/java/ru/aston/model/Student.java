@@ -1,6 +1,5 @@
 package ru.aston.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,10 +16,9 @@ public class Student implements Comparable<Student> {
 	public Student(
 			@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
 	) {
-
 		this.groupNumber = Objects.requireNonNull(groupNumber, "Номер группы должен быть указан");
-		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан");
 		this.averageGrade = averageGrade;
+		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан");
 	}
 
 	public String getGroupNumber() {
@@ -44,22 +42,14 @@ public class Student implements Comparable<Student> {
 	}
 
 	@Override
-	public int compareTo(@NotNull Student other) {
-		return this.recordBookNumber.compareTo(other.recordBookNumber);
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Student student))
 			return false;
 
-		Student student = (Student) o;
-
-		return Double.compare(student.averageGrade, this.averageGrade) == 0
-				&& this.groupNumber.equals(student.groupNumber)
+		return this.groupNumber.equals(student.groupNumber)
+				&& Double.compare(this.averageGrade, student.averageGrade) == 0
 				&& this.recordBookNumber.equals(student.recordBookNumber);
 	}
 
@@ -68,12 +58,18 @@ public class Student implements Comparable<Student> {
 		return Objects.hash(groupNumber, averageGrade, recordBookNumber);
 	}
 
-	public static final Comparator<Student> BY_GRADE = Comparator.comparingDouble(Student::getAverageGrade);
+	@Override
+	public int compareTo(@NotNull Student other) {
+		int result = this.groupNumber.compareTo(other.groupNumber);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Student> BY_GROUP = Comparator.comparing(Student::getGroupNumber);
+		result = Double.compare(this.averageGrade, other.averageGrade);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Student> BY_GROUP_THEN_GRADE_DESC = Comparator.comparing(Student::getGroupNumber)
-			.thenComparing(Comparator.comparingDouble(Student::getAverageGrade).reversed());
+		return this.recordBookNumber.compareTo(other.recordBookNumber);
+	}
 
 	public static class Builder {
 		private String groupNumber;
@@ -102,5 +98,4 @@ public class Student implements Comparable<Student> {
 			return new Student(this);
 		}
 	}
-
 }

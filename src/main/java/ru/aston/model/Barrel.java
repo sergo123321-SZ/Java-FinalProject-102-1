@@ -2,7 +2,6 @@ package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Barrel implements Comparable<Barrel> {
@@ -40,19 +39,14 @@ public class Barrel implements Comparable<Barrel> {
 	}
 
 	@Override
-	public int compareTo(@NotNull Barrel other) {
-		return Double.compare(this.volume, other.volume);
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Barrel barrel))
 			return false;
-		Barrel barrel = (Barrel) o;
-		return Double.compare(barrel.volume, volume) == 0 && storedMaterial.equals(barrel.storedMaterial)
-				&& barrelMaterial.equals(barrel.barrelMaterial);
+
+		return Double.compare(this.volume, barrel.volume) == 0 && this.storedMaterial.equals(barrel.storedMaterial)
+				&& this.barrelMaterial.equals(barrel.barrelMaterial);
 	}
 
 	@Override
@@ -60,13 +54,18 @@ public class Barrel implements Comparable<Barrel> {
 		return Objects.hash(volume, storedMaterial, barrelMaterial);
 	}
 
-	public static final Comparator<Barrel> BY_STORED_MATERIAL = Comparator.comparing(Barrel::getStoredMaterial);
+	@Override
+	public int compareTo(@NotNull Barrel other) {
+		int result = Double.compare(this.volume, other.volume);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Barrel> BY_BARREL_MATERIAL = Comparator.comparing(Barrel::getBarrelMaterial);
+		result = this.storedMaterial.compareTo(other.storedMaterial);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Barrel> BY_MATERIAL_THEN_VOLUME_DESC = Comparator
-			.comparing(Barrel::getStoredMaterial)
-			.thenComparing(Comparator.comparingDouble(Barrel::getVolume).reversed());
+		return this.barrelMaterial.compareTo(other.barrelMaterial);
+	}
 
 	public static class Builder {
 		private double volume;
