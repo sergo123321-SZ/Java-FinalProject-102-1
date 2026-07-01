@@ -2,7 +2,6 @@ package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class Car implements Comparable<Car> {
@@ -15,8 +14,8 @@ public class Car implements Comparable<Car> {
 	}
 
 	public Car(final int power, @NotNull final String model, final int productionYear) {
-		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");
 		this.power = power;
+		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");
 		this.productionYear = productionYear;
 	}
 
@@ -38,18 +37,13 @@ public class Car implements Comparable<Car> {
 	}
 
 	@Override
-	public int compareTo(@NotNull Car other) {
-		return this.model.compareTo(other.model);
-	}
-
-	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Car car))
 			return false;
-		Car car = (Car) o;
-		return power == car.power && productionYear == car.productionYear && model.equals(car.model);
+
+		return this.power == car.power && this.model.equals(car.model) && this.productionYear == car.productionYear;
 	}
 
 	@Override
@@ -57,12 +51,18 @@ public class Car implements Comparable<Car> {
 		return Objects.hash(power, model, productionYear);
 	}
 
-	public static final Comparator<Car> BY_POWER = Comparator.comparingInt(Car::getPower);
+	@Override
+	public int compareTo(@NotNull Car other) {
+		int result = Integer.compare(this.power, other.power);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Car> BY_YEAR = Comparator.comparingInt(Car::getProductionYear);
+		result = this.model.compareTo(other.model);
+		if (result != 0)
+			return result;
 
-	public static final Comparator<Car> BY_MODEL_THEN_POWER_DESC = Comparator.comparing(Car::getModel)
-			.thenComparing(Comparator.comparingInt(Car::getPower).reversed());
+		return Integer.compare(this.productionYear, other.productionYear);
+	}
 
 	public static class Builder {
 		private int power;
