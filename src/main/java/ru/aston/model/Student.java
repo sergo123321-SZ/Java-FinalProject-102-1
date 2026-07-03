@@ -31,6 +31,10 @@ public class Student implements Comparable<Student> {
 		this.recordBookNumber = recordBookNumber;
 	}
 
+	public static Barrel.Builder biulder() {
+		return new Barrel.Builder();
+	}
+
 	public String getGroupNumber() {
 		return groupNumber;
 	}

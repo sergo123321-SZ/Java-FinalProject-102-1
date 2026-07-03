@@ -29,6 +29,10 @@ public class Barrel implements Comparable<Barrel> {
 		this.barrelMaterial = barrelMaterial;
 	}
 
+	public static Builder biulder() {
+		return new Builder();
+	}
+
 	public double getVolume() {
 		return volume;
 	}
