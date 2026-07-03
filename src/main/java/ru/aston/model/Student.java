@@ -16,10 +16,14 @@ public class Student implements Comparable<Student> {
 	public Student(
 			@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
 	) {
-		if (groupNumber == null || groupNumber.isBlank() || Double.isNaN(averageGrade)
-				|| Double.isInfinite(averageGrade) || averageGrade < 0.0 || averageGrade > 5.0
-				|| recordBookNumber == null || recordBookNumber.isBlank()) {
-			throw new IllegalArgumentException("Некорректные параметры студента");
+		if (groupNumber.isBlank()) {
+			throw new IllegalArgumentException("Номер группы должен быть указан");
+		}
+		if (Double.isNaN(averageGrade) || Double.isInfinite(averageGrade) || averageGrade < 0.0 || averageGrade > 5.0) {
+			throw new IllegalArgumentException("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
+		}
+		if (recordBookNumber.isBlank()) {
+			throw new IllegalArgumentException("Номер зачетной книжки должен быть указан");
 		}
 
 		this.groupNumber = groupNumber;
