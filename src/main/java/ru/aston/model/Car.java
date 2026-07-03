@@ -1,7 +1,7 @@
 package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
-
+import java.time.Year;
 import java.util.Objects;
 
 public class Car implements Comparable<Car> {
@@ -14,8 +14,18 @@ public class Car implements Comparable<Car> {
 	}
 
 	public Car(final int power, @NotNull final String model, final int productionYear) {
+		if (power <= 0) {
+			throw new IllegalArgumentException("Мощность автомобиля должна быть строго больше 0 л.с.");
+		}
+		if (model.isBlank()) {
+			throw new IllegalArgumentException("Модель автомобиля должна быть указана");
+		}
+		if (productionYear < 1886 || productionYear > Year.now().getValue()) {
+			throw new IllegalArgumentException("Год производства должен быть в диапазоне от 1886 до текущего года");
+		}
+
 		this.power = power;
-		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");
+		this.model = model;
 		this.productionYear = productionYear;
 	}
 

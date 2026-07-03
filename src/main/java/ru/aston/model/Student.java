@@ -16,9 +16,19 @@ public class Student implements Comparable<Student> {
 	public Student(
 			@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
 	) {
-		this.groupNumber = Objects.requireNonNull(groupNumber, "Номер группы должен быть указан");
+		if (groupNumber.isBlank()) {
+			throw new IllegalArgumentException("Номер группы должен быть указан");
+		}
+		if (Double.isNaN(averageGrade) || Double.isInfinite(averageGrade) || averageGrade < 0.0 || averageGrade > 5.0) {
+			throw new IllegalArgumentException("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
+		}
+		if (recordBookNumber.isBlank()) {
+			throw new IllegalArgumentException("Номер зачетной книжки должен быть указан");
+		}
+
+		this.groupNumber = groupNumber;
 		this.averageGrade = averageGrade;
-		this.recordBookNumber = Objects.requireNonNull(recordBookNumber, "Номер зачетной книжки должен быть указан");
+		this.recordBookNumber = recordBookNumber;
 	}
 
 	public String getGroupNumber() {
