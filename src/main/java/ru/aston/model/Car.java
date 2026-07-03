@@ -14,23 +14,14 @@ public class Car implements Comparable<Car> {
 	}
 
 	public Car(final int power, @NotNull final String model, final int productionYear) {
-		this.power = power;
-		if (power <= 0) {
-			throw new IllegalArgumentException("Мощность автомобиля должна быть строго больше 0 л.с.");
+		if (power <= 0 || model == null || model.isBlank() || productionYear < 1886
+				|| productionYear > Year.now().getValue()) {
+			throw new IllegalArgumentException("Некорректные параметры автомобиля");
 		}
-		this.model = Objects.requireNonNull(model, "Модель автомобиля не может быть пустой или равной null");
-		if (model.isBlank()) {
-			throw new IllegalArgumentException("Модель автомобиля не может быть пустой");
-		}
-		this.productionYear = productionYear;
-		int currentYear = Year.now().getValue();
 
-		if (productionYear < 1886) {
-			throw new IllegalArgumentException("Год производства не может быть раньше 1886");
-		}
-		if (productionYear > currentYear) {
-			throw new IllegalArgumentException("Год производства не может быть в будущем");
-		}
+		this.power = power;
+		this.model = model;
+		this.productionYear = productionYear;
 	}
 
 	public int getPower() {
