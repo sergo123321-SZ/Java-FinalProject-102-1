@@ -29,6 +29,10 @@ public class Car implements Comparable<Car> {
 		this.productionYear = productionYear;
 	}
 
+	public static Barrel.Builder biulder() {
+		return new Barrel.Builder();
+	}
+
 	public int getPower() {
 		return power;
 	}
