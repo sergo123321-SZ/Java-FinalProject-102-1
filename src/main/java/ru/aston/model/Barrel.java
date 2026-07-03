@@ -15,8 +15,20 @@ public class Barrel implements Comparable<Barrel> {
 
 	public Barrel(final double volume, @NotNull final String storedMaterial, @NotNull final String barrelMaterial) {
 		this.volume = volume;
+		if (Double.isNaN(volume) || Double.isInfinite(volume)) {
+			throw new IllegalArgumentException("Объем бочки должен быть числом");
+		}
+		if (volume <= 0.0) {
+			throw new IllegalArgumentException("Объем бочки должен быть строго больше 0.0 л");
+		}
 		this.storedMaterial = Objects.requireNonNull(storedMaterial, "Хранимый материал должен быть указан");
+		if (storedMaterial.isBlank()) {
+			throw new IllegalArgumentException("Хранимый материал должен быть указан");
+		}
 		this.barrelMaterial = Objects.requireNonNull(barrelMaterial, "Материал бочки должен быть указан");
+		if (barrelMaterial.isBlank()) {
+			throw new IllegalArgumentException("Материал бочки должен быть указан");
+		}
 	}
 
 	public double getVolume() {
