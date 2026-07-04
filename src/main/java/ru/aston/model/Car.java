@@ -1,6 +1,7 @@
 package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
+
 import java.time.Year;
 import java.util.Objects;
 
@@ -29,8 +30,8 @@ public class Car implements Comparable<Car> {
 		this.productionYear = productionYear;
 	}
 
-	public static Barrel.Builder biulder() {
-		return new Barrel.Builder();
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public int getPower() {
