@@ -1,8 +1,8 @@
 package ru.aston.model;
 
-import java.util.Objects;
-
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class Student implements Comparable<Student> {
 	private final String groupNumber;
@@ -14,8 +14,10 @@ public class Student implements Comparable<Student> {
 	}
 
 	public Student(
-			@NotNull final String groupNumber, final double averageGrade, @NotNull final String recordBookNumber
-	) {
+			@NotNull final String groupNumber,
+			final double averageGrade,
+			@NotNull final String recordBookNumber)
+	{
 		if (groupNumber.isBlank()) {
 			throw new IllegalArgumentException("Номер группы должен быть указан");
 		}
@@ -48,39 +50,45 @@ public class Student implements Comparable<Student> {
 	}
 
 	@Override
-	public String toString() {
-		return String.format(
-				"Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade,
-				recordBookNumber
-		);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Student student))
-			return false;
-
-		return this.groupNumber.equals(student.groupNumber)
-				&& Double.compare(this.averageGrade, student.averageGrade) == 0
-				&& this.recordBookNumber.equals(student.recordBookNumber);
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(groupNumber, averageGrade, recordBookNumber);
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Student student)) {
+			return false;
+		}
+
+		return this.groupNumber.equals(student.groupNumber) &&
+				Double.compare(this.averageGrade, student.averageGrade) == 0 &&
+				this.recordBookNumber.equals(student.recordBookNumber);
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]",
+				groupNumber,
+				averageGrade,
+				recordBookNumber
+		);
+	}
+
+	@Override
 	public int compareTo(@NotNull Student other) {
 		int result = this.groupNumber.compareTo(other.groupNumber);
-		if (result != 0)
+		if (result != 0) {
 			return result;
+		}
 
 		result = Double.compare(this.averageGrade, other.averageGrade);
-		if (result != 0)
+		if (result != 0) {
 			return result;
+		}
 
 		return this.recordBookNumber.compareTo(other.recordBookNumber);
 	}
