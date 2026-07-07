@@ -23,34 +23,6 @@ public class CommandProcessor {
 		try {
 			CommandLine cmd = parser.parse(options, commands);
 
-			System.out.println("--- Запуск конвейера обработки ---");
-
-			if (cmd.hasOption(CommandStep.SELECT.longOpt)) {
-				String path = cmd.getOptionValue(CommandStep.SELECT.longOpt);
-				System.out.println("[Шаг 1 - SELECT] Загрузка данных из: " + path);
-			}
-			else {
-				System.out.println("[Ошибка] Выполнение невозможно: не выбран объект (--select)");
-				return;
-			}
-
-			if (cmd.hasOption(CommandStep.FILTER.longOpt)) {
-				String filterRule = cmd.getOptionValue(CommandStep.FILTER.longOpt);
-				System.out.println("[Шаг 2 - FILTER] Применение фильтра: " + filterRule);
-			}
-
-			if (cmd.hasOption(CommandStep.SORT.longOpt)) {
-				String sortRule = cmd.getOptionValue(CommandStep.SORT.longOpt);
-				System.out.println("[Шаг 3 - SORT] Сортировка по полю: " + sortRule);
-			}
-
-			if (cmd.hasOption(CommandStep.EXPORT.longOpt)) {
-				String dest = cmd.getOptionValue(CommandStep.EXPORT.longOpt);
-				System.out.println("[Шаг 4 - EXPORT] Сохранение результата в: " + dest);
-			}
-
-			System.out.println("--- Конвейер успешно завершен ---");
-
 		}
 		catch (ParseException e) {
 			System.out.println("Ошибка парсинга: " + e.getMessage());
@@ -59,10 +31,9 @@ public class CommandProcessor {
 	}
 
 	private enum CommandStep {
-		SELECT("s", "select", true, "Выбрать объект"),
-		FILTER("f", "filter", true, "Отфильтровать данные"),
-		SORT("sort", "sort", true, "Отсортировать данные"),
-		EXPORT("e", "export", true, "Экспортировать результат");
+		SELECT("M", "model", true, TranslationManager.getModelOptionDescriptionString()),
+		SORT("S", "sort", true, TranslationManager.getSortOptionDescriptionString()),
+		EXPORT("e", "export", true, TranslationManager.getExportOptionDescriptionString());
 
 		final String shortOpt;
 		final String longOpt;

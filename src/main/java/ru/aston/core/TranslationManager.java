@@ -33,15 +33,16 @@ public class TranslationManager {
 		return MessageFormat.format(resourceBundleString, args);
 	}
 
-	public static String sayHello(String name) {
-		return getString("greeting", name);
+	public static String getModelOptionDescriptionString() {
+		return getString("option.model.description");
 	}
 
-	public static String sayBye() {
-		return getString("farewell");
+	public static String getSortOptionDescriptionString() {
+		return getString("option.sort.description");
 	}
 
-	public static String displayCount(int count) {
-		return getString("items_count", count);
+	public static String getExportOptionDescriptionString() {
+		return getString("option.export.description");
 	}
+
 }
