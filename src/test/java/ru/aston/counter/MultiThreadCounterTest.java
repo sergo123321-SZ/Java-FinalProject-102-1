@@ -42,7 +42,7 @@ class MultiThreadCounterTest {
 	}
 
 	@Test
-	void parallelSubListTest() {
+	void parallelSubListTest() throws ExecutionException, InterruptedException {
 		long start1 = System.nanoTime();
 		Long result = MultiThreadCounter.countParallelSubList(primitives, 999_999, 1);
 		long end1 = System.nanoTime();
