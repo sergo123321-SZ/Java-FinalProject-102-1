@@ -23,28 +23,35 @@ public class StudentCounterTest {
 	@BeforeAll
 	static void setUp() {
 		Random random = new Random();
-		students = Stream.generate(() -> Student.builder()
-				.setGroupNumber(RandomStringUtils.insecure().nextNumeric(10))
-				.setAverageGrade(random.nextDouble())
-				.setRecordBookNumber(RandomStringUtils.insecure().nextAlphabetic(10))
-				.build())
+		students = Stream.generate(
+				() -> Student.builder()
+						.setGroupNumber(RandomStringUtils.insecure().nextNumeric(10))
+						.setAverageGrade(random.nextDouble())
+						.setRecordBookNumber(RandomStringUtils.insecure().nextAlphabetic(10))
+						.build()
+		)
 				.limit(100_000)
 				.collect(Collectors.toList());
 
-		// добавим несколько целевых
-		students.addAll(List.of(Student.builder()
-				.setGroupNumber(TARGET_GROUP_NUMBER)
-				.setAverageGrade(TARGET_AVERAGE_GRADE)
-				.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-				.build(), Student.builder()
-						.setGroupNumber(TARGET_GROUP_NUMBER)
-						.setAverageGrade(TARGET_AVERAGE_GRADE)
-						.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-						.build(), Student.builder()
+		students.addAll(
+				List.of(
+						Student.builder()
 								.setGroupNumber(TARGET_GROUP_NUMBER)
 								.setAverageGrade(TARGET_AVERAGE_GRADE)
 								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-								.build()));
+								.build(),
+						Student.builder()
+								.setGroupNumber(TARGET_GROUP_NUMBER)
+								.setAverageGrade(TARGET_AVERAGE_GRADE)
+								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
+								.build(),
+						Student.builder()
+								.setGroupNumber(TARGET_GROUP_NUMBER)
+								.setAverageGrade(TARGET_AVERAGE_GRADE)
+								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
+								.build()
+				)
+		);
 
 		targetStudent = Student.builder()
 				.setGroupNumber(TARGET_GROUP_NUMBER)
@@ -73,7 +80,7 @@ public class StudentCounterTest {
 	}
 
 	@Test
-	void parallelSubListTest() {
+	void parallelSubListTest() throws ExecutionException, InterruptedException {
 		long start1 = System.nanoTime();
 		Long result = MultiThreadCounter.countParallelSubList(students, targetStudent, 1);
 		long end1 = System.nanoTime();
