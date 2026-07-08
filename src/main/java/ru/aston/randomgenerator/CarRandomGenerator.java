@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.time.Year;
 
 public class CarRandomGenerator {
+	/// \todo use locale from \c TranslationManager
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Car> generate(int size) {
