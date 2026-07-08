@@ -2,6 +2,7 @@ package ru.aston.core;
 
 
 import org.apache.commons.cli.*;
+import java.util.List;
 
 
 public class CommandProcessor {
@@ -31,20 +32,41 @@ public class CommandProcessor {
 	}
 
 	private enum CommandStep {
-		SELECT("M", "model", true, TranslationManager.getModelOptionDescriptionString()),
-		SORT("S", "sort", true, TranslationManager.getSortOptionDescriptionString()),
-		EXPORT("e", "export", true, TranslationManager.getExportOptionDescriptionString());
+		EXIT("E", "exit", false, TranslationManager.getExitOptionDescription()),
+		MODEL("M", "model", true, TranslationManager.getModelOptionDescription()),
+		DISPLAY("D", "display", false, TranslationManager.getDisplayOptionDescription()),
+		SORT("S", "sort", true, TranslationManager.getSortOptionDescription(), List.of(MODEL)),
+		CREATE("C", "create", true, TranslationManager.getCreateOptionDescription(), List.of(MODEL)),
+		FILE("F", "file", true, TranslationManager.getFileOptionDescription(), List.of(MODEL)),
+		EXPORT("E", "export", true, TranslationManager.getExportOptionDescription(), List.of(FILE, MODEL)),
+		IMPORT("I", "import", true, TranslationManager.getImportOptionDescription(), List.of(FILE, MODEL));
+
+		static {
+			EXPORT.conflictingSteps = List.of(IMPORT, CREATE);
+			IMPORT.conflictingSteps = List.of(EXPORT, CREATE);
+			CREATE.conflictingSteps = List.of(IMPORT, EXPORT);
+		}
 
 		final String shortOpt;
 		final String longOpt;
 		final boolean hasArg;
 		final String description;
+		List<CommandStep> requiredSteps;
+		List<CommandStep> conflictingSteps;
 
 		CommandStep(String shortOpt, String longOpt, boolean hasArg, String description) {
 			this.shortOpt = shortOpt;
 			this.longOpt = longOpt;
 			this.hasArg = hasArg;
 			this.description = description;
+			this.requiredSteps = List.of();
+			this.conflictingSteps = List.of();
+		}
+
+		CommandStep(String shortOpt, String longOpt, boolean hasArg, String description, List<CommandStep> requiredSteps) {
+			this(shortOpt, longOpt, hasArg, description);
+			this.requiredSteps = requiredSteps;
+			this.conflictingSteps = List.of();
 		}
 	}
 }

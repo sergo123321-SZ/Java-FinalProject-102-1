@@ -5,44 +5,63 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+
 public class TranslationManager {
 	private static final String TRANSLATIONS_BASE_NAME = "messages";
 
 	private static Locale currentLocale = Locale.getDefault();
-	private static ResourceBundle resourceBundle = reInitializeResources();
+	private static ResourceBundle resourceBundle = loadResources();
 
 	private TranslationManager() {
 	}
 
 	public static void setLocale(Locale locale) {
 		currentLocale = locale;
-		reInitializeResources();
+		resourceBundle = loadResources();
 	}
 
-	private static ResourceBundle reInitializeResources() {
-		resourceBundle = ResourceBundle.getBundle(TRANSLATIONS_BASE_NAME, currentLocale);
-		return resourceBundle;
+	private static ResourceBundle loadResources() {
+		return ResourceBundle.getBundle(TRANSLATIONS_BASE_NAME, currentLocale);
 	}
 
-	public static String getString(String key) {
+	private static String getString(String key) {
 		return resourceBundle.getString(key);
 	}
 
-	public static String getString(String key, Object... args) {
-		String resourceBundleString = resourceBundle.getString(key);
-		return MessageFormat.format(resourceBundleString, args);
+	private static String getString(String key, Object... args) {
+		return MessageFormat.format(resourceBundle.getString(key), args);
 	}
 
-	public static String getModelOptionDescriptionString() {
+	public static String getExitOptionDescription() {
+		return getString("option.exit.description");
+	}
+
+	public static String getModelOptionDescription() {
 		return getString("option.model.description");
 	}
 
-	public static String getSortOptionDescriptionString() {
+	public static String getDisplayOptionDescription() {
+		return getString("option.display.description");
+	}
+
+	public static String getSortOptionDescription() {
 		return getString("option.sort.description");
 	}
 
-	public static String getExportOptionDescriptionString() {
+	public static String getExportOptionDescription() {
 		return getString("option.export.description");
+	}
+
+	public static String getFileOptionDescription() {
+		return getString("option.file.description");
+	}
+
+	public static String getImportOptionDescription() {
+		return getString("option.import.description");
+	}
+
+	public static String getCreateOptionDescription() {
+		return getString("option.create.description");
 	}
 
 }
