@@ -32,36 +32,59 @@ public class TranslationManager {
 		return MessageFormat.format(resourceBundle.getString(key), args);
 	}
 
+	public static String getHelpText(String version, String team) {
+		return getString("helpText", version, team);
+	}
+
 	public static String getExitOptionDescription() {
 		return getString("option.exit.description");
 	}
 
-	public static String getModelOptionDescription() {
-		return getString("option.model.description");
+	public static String getModelOptionDescription(String acceptableOptions) {
+		return getString("option.model.description", acceptableOptions);
 	}
 
-	public static String getDisplayOptionDescription() {
-		return getString("option.display.description");
+	public static String getLengthOptionDescription(String requiredSteps, String conflictingSteps) {
+		return getString("option.length.description", requiredSteps, conflictingSteps);
 	}
 
-	public static String getSortOptionDescription() {
-		return getString("option.sort.description");
+	public static String getDisplayOptionDescription(String requiredSteps, String conflictingSteps) {
+		return getString("option.display.description", requiredSteps, conflictingSteps);
 	}
 
-	public static String getExportOptionDescription() {
-		return getString("option.export.description");
+	public static String getCreateOptionDescription(String requiredSteps, String conflictingSteps) {
+		return getString("option.create.description", requiredSteps, conflictingSteps);
 	}
 
-	public static String getFileOptionDescription() {
-		return getString("option.file.description");
+	public static String getSortOptionDescription(
+			String ascVariantName,
+			String descVariantName,
+			String specialVariantName,
+			String requiredSteps,
+			String conflictingSteps)
+	{
+		return getString("option.sort.description", ascVariantName, descVariantName, specialVariantName, requiredSteps, conflictingSteps);
 	}
 
-	public static String getImportOptionDescription() {
-		return getString("option.import.description");
+	public static String getFileOptionDescription(String requiredSteps, String conflictingSteps) {
+		return getString("option.file.description", requiredSteps, conflictingSteps);
 	}
 
-	public static String getCreateOptionDescription() {
-		return getString("option.create.description");
+	public static String getImportOptionDescription(
+			String appendVariantName,
+			String reWriteVariantName,
+			String requiredSteps,
+			String conflictingSteps)
+	{
+		return getString("option.import.description", appendVariantName, reWriteVariantName, requiredSteps, conflictingSteps);
 	}
 
+	public static String getExportOptionDescription(
+			String appendVariantName,
+			String reWriteVariantName,
+			String requiredSteps,
+			String conflictingSteps)
+	{
+		return getString("option.export.description", appendVariantName, reWriteVariantName, requiredSteps, conflictingSteps);
+	}
 }
