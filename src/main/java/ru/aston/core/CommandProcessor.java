@@ -2,6 +2,7 @@ package ru.aston.core;
 
 
 import org.apache.commons.cli.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CommandProcessor {
 	}
 
 	// @formatter:off
-	private String getDescription(CommandStep step) {
+	private String getDescription(@NotNull CommandStep step) {
 		return switch (step) {
 			case EXIT -> TranslationManager.getExitOptionDescription();
 			case HELP -> TranslationManager.getHelpText("1.0", "TeamName");
@@ -67,7 +68,7 @@ public class CommandProcessor {
 	}
 	// @formatter:on
 
-	private String getAcceptableOptionsString(CommandStep step) {
+	private @NotNull String getAcceptableOptionsString(@NotNull CommandStep step) {
 		if (step.acceptableVariants.isEmpty()) {
 			throw new IllegalArgumentException("No acceptable options for step: " + step);
 		}
@@ -75,7 +76,7 @@ public class CommandProcessor {
 		return String.join(" | ", step.acceptableVariants);
 	}
 
-	private String getRequiredStepsString(CommandStep step) {
+	private @NotNull String getRequiredStepsString(@NotNull CommandStep step) {
 		if (step.requiredSteps.isEmpty()) {
 			throw new IllegalArgumentException("No required steps for step: " + step);
 		}
@@ -83,7 +84,7 @@ public class CommandProcessor {
 		return String.join(" | ", step.requiredSteps.stream().map(s -> s.longOpt).toList());
 	}
 
-	private String getConflictingStepsString(CommandStep step) {
+	private @NotNull String getConflictingStepsString(@NotNull CommandStep step) {
 		if (step.conflictingSteps.isEmpty()) {
 			throw new IllegalArgumentException("No conflicting steps for step: " + step);
 		}
@@ -125,7 +126,7 @@ public class CommandProcessor {
 		public final String shortOpt;
 		public final String longOpt;
 		public final boolean hasArg;
-		public List<String> acceptableVariants;
+		public final List<String> acceptableVariants;
 		public List<CommandStep> requiredSteps;
 		public List<CommandStep> conflictingSteps;
 
