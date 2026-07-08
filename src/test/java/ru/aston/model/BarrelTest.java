@@ -119,9 +119,8 @@ class BarrelTest {
 		Barrel barrel2 = Barrel.builder().setVolume(200.0).setStoredMaterial("Water").setBarrelMaterial("Steel")
 				.build();
 
-		assertThat(
-				barrel1.compareTo(barrel2)
-		).as("Буква, с которой название хранимого материала в первой бочке идет раньше по алфавиту, чем у второй бочки")
+		assertThat(barrel1.compareTo(barrel2))
+				.as("Буква, с которой название хранимого материала в первой бочке идет раньше по алфавиту, чем у второй бочки")
 				.isNegative();
 	}
 
@@ -153,9 +152,8 @@ class BarrelTest {
 				.build();
 		Barrel barrel2 = Barrel.builder().setVolume(200.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build();
 
-		assertThat(
-				barrel1.compareTo(barrel2)
-		).as("Буква, с которой название хранимого материала в первой бочке идет позже по алфавиту, чем у второй бочки")
+		assertThat(barrel1.compareTo(barrel2))
+				.as("Буква, с которой название хранимого материала в первой бочке идет позже по алфавиту, чем у второй бочки")
 				.isPositive();
 	}
 
@@ -174,45 +172,40 @@ class BarrelTest {
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при объеме равном 0")
 	void validation_volumeEqualsZero_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Barrel.builder().setVolume(0.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build()
-		).as("Ожидалось исключение при объеме 0.0").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Barrel.builder().setVolume(0.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build())
+				.as("Ожидалось исключение при объеме 0.0").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при объеме меньше 0")
 	void validation_volumeIsLessThanZero_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Barrel.builder().setVolume(-154.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build()
-		).as("Ожидалось исключение при объеме меньше 0").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Barrel.builder().setVolume(-154.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build())
+				.as("Ожидалось исключение при объеме меньше 0").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при объеме равном Double.NaN(не число)")
 	void validation_averageGradeIsNaN_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Barrel.builder().setVolume(Double.NaN).setStoredMaterial("Oil").setBarrelMaterial("Steel").build()
-		).as("Ожидалось исключение при объеме равном Double.NaN(не число)").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Barrel.builder().setVolume(Double.NaN).setStoredMaterial("Oil").setBarrelMaterial("Steel").build())
+				.as("Ожидалось исключение при объеме равном Double.NaN(не число)").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом хранимом материале")
 	void validation_storedMaterialIsBlank_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Barrel.builder().setVolume(154.3).setStoredMaterial("").setBarrelMaterial("Steel").build()
-		).as("Ожидалось исключение при пустом хранимом материале").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Barrel.builder().setVolume(154.3).setStoredMaterial("").setBarrelMaterial("Steel").build())
+				.as("Ожидалось исключение при пустом хранимом материале").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Хранимый материал должен быть указан");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом материале бочки")
 	void validation_barrelMaterialIsBlank_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Barrel.builder().setVolume(154.3).setStoredMaterial("Oil").setBarrelMaterial("").build()
-		).as("Ожидалось исключение при пустом материале бочки").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Barrel.builder().setVolume(154.3).setStoredMaterial("Oil").setBarrelMaterial("").build())
+				.as("Ожидалось исключение при пустом материале бочки").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Материал бочки должен быть указан");
 	}
 }

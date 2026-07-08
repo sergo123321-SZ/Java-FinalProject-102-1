@@ -12,12 +12,10 @@ public class CarRandomGenerator {
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Car> generate(int size) {
-		return faker.collection(
-				() -> Car.builder()
-						.setModel(faker.vehicle().model())
-						.setPower(faker.number().numberBetween(60, 600))
-						.setProductionYear(faker.number().numberBetween(1950, Year.now().getValue()))
-						.build()
-		).len(size).generate();
+		return faker.collection(() -> Car.builder()
+				.setModel(faker.vehicle().model())
+				.setPower(faker.number().numberBetween(60, 600))
+				.setProductionYear(faker.number().numberBetween(1950, Year.now().getValue()))
+				.build()).len(size).generate();
 	}
 }

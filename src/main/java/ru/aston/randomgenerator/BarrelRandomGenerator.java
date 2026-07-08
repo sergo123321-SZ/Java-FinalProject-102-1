@@ -11,14 +11,10 @@ public class BarrelRandomGenerator {
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Barrel> generate(int size) {
-		return faker.collection(
-				() -> Barrel.builder()
-						.setVolume(Math.round(faker.number().randomDouble(1, 10, 500) * 10.0) / 10.0)
-						.setStoredMaterial(
-								faker.options().option("Нефть", "Бензин", "Мазут", "Вода", "Вино", "Пиво", "Мед", "Сок")
-						)
-						.setBarrelMaterial(faker.options().option("Дуб", "Сосна", "Сталь", "Пластик", "Алюминий"))
-						.build()
-		).len(size).generate();
+		return faker.collection(() -> Barrel.builder()
+				.setVolume(Math.round(faker.number().randomDouble(1, 10, 500) * 10.0) / 10.0)
+				.setStoredMaterial(faker.options().option("Нефть", "Бензин", "Мазут", "Вода", "Вино", "Пиво", "Мед", "Сок"))
+				.setBarrelMaterial(faker.options().option("Дуб", "Сосна", "Сталь", "Пластик", "Алюминий"))
+				.build()).len(size).generate();
 	}
 }

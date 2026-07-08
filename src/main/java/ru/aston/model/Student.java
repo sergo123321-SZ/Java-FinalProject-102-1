@@ -70,12 +70,8 @@ public class Student implements Comparable<Student> {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]",
-				groupNumber,
-				averageGrade,
-				recordBookNumber
-		);
+		return String
+				.format("Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade, recordBookNumber);
 	}
 
 	@Override
