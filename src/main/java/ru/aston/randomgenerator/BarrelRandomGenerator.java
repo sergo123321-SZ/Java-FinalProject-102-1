@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class BarrelRandomGenerator {
+	/// \todo use locale from \c TranslationManager
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Barrel> generate(int size) {

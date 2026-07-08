@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class StudentRandomGenerator {
+	/// \todo use locale from \c TranslationManager
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Student> generate(int size) {

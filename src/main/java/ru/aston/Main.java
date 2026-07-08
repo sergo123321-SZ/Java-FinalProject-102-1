@@ -1,12 +1,15 @@
 package ru.aston;
 
+import ru.aston.randomgenerator.BarrelRandomGenerator;
+import ru.aston.randomgenerator.CarRandomGenerator;
+import ru.aston.randomgenerator.StudentRandomGenerator;
+
 public class Main {
 	public static void main(String[] args) {
-		System.out.printf("Hello and welcome!");
 
-		for (int i = 1; i <= 5; i++) {
-			System.out.println("i = " + i);
-		}
+		BarrelRandomGenerator.generate(5).stream().forEach(System.out::println);
+		CarRandomGenerator.generate(5).stream().forEach(System.out::println);
+		StudentRandomGenerator.generate(5).stream().forEach(System.out::println);
 
 	}
 }
