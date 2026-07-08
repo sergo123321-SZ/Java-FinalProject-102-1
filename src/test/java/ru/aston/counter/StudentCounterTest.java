@@ -23,35 +23,27 @@ public class StudentCounterTest {
 	@BeforeAll
 	static void setUp() {
 		Random random = new Random();
-		students = Stream.generate(
-				() -> Student.builder()
-						.setGroupNumber(RandomStringUtils.insecure().nextNumeric(10))
-						.setAverageGrade(random.nextDouble())
-						.setRecordBookNumber(RandomStringUtils.insecure().nextAlphabetic(10))
-						.build()
-		)
+		students = Stream.generate(() -> Student.builder()
+				.setGroupNumber(RandomStringUtils.insecure().nextNumeric(10))
+				.setAverageGrade(random.nextDouble())
+				.setRecordBookNumber(RandomStringUtils.insecure().nextAlphabetic(10))
+				.build())
 				.limit(100_000)
 				.collect(Collectors.toList());
 
-		students.addAll(
-				List.of(
-						Student.builder()
+		students.addAll(List.of(Student.builder()
+				.setGroupNumber(TARGET_GROUP_NUMBER)
+				.setAverageGrade(TARGET_AVERAGE_GRADE)
+				.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
+				.build(), Student.builder()
+						.setGroupNumber(TARGET_GROUP_NUMBER)
+						.setAverageGrade(TARGET_AVERAGE_GRADE)
+						.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
+						.build(), Student.builder()
 								.setGroupNumber(TARGET_GROUP_NUMBER)
 								.setAverageGrade(TARGET_AVERAGE_GRADE)
 								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-								.build(),
-						Student.builder()
-								.setGroupNumber(TARGET_GROUP_NUMBER)
-								.setAverageGrade(TARGET_AVERAGE_GRADE)
-								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-								.build(),
-						Student.builder()
-								.setGroupNumber(TARGET_GROUP_NUMBER)
-								.setAverageGrade(TARGET_AVERAGE_GRADE)
-								.setRecordBookNumber(TARGET_RECORD_BOOK_NUMBER)
-								.build()
-				)
-		);
+								.build()));
 
 		targetStudent = Student.builder()
 				.setGroupNumber(TARGET_GROUP_NUMBER)

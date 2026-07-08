@@ -6,14 +6,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 public class MultiThreadCounter {
 
 	public static Long countParallelArray(Object[] objects, @NotNull Object object, int threadsCount)
 			throws ExecutionException, InterruptedException
 	{
-
 		if (threadsCount <= 0) {
 			throw new IllegalArgumentException("Threads count must be greater than 0");
 		}
@@ -36,17 +41,23 @@ public class MultiThreadCounter {
 			tasks.add(future);
 		}
 
-		ExecutorService fixedThreadPool = Executors.newFixedThreadPool(threadsCount);
-		List<Future<Integer>> futures = fixedThreadPool.invokeAll(tasks);
+		Long totalCount;
+		try (ExecutorService fixedThreadPool = Executors.newFixedThreadPool(threadsCount)) {
+			List<Future<Integer>> futures = fixedThreadPool.invokeAll(tasks);
 
-		Long totalCount = 0L;
-		for (Future<Integer> future : futures) {
-			totalCount += future.get();
+			totalCount = 0L;
+			for (Future<Integer> future : futures) {
+				totalCount += future.get();
+			}
+
+			fixedThreadPool.shutdown();
+			if (!fixedThreadPool.awaitTermination(1, TimeUnit.SECONDS)) {
+				fixedThreadPool.shutdownNow();
+			}
 		}
-
-		fixedThreadPool.shutdown();
-		if (fixedThreadPool.awaitTermination(1, TimeUnit.SECONDS)) {
-			fixedThreadPool.shutdownNow();
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw e;
 		}
 
 		return totalCount;
@@ -55,6 +66,9 @@ public class MultiThreadCounter {
 	public static Long countParallelSubList(Collection<?> objects, @NotNull Object object, int threadsCount)
 			throws ExecutionException, InterruptedException
 	{
+		if (threadsCount <= 0) {
+			throw new IllegalArgumentException("Threads count must be greater than 0");
+		}
 
 		Long totalCount = 0L;
 
@@ -68,12 +82,10 @@ public class MultiThreadCounter {
 				int start = i * chunkSize;
 				int end = (i == threadsCount - 1) ? objects.size() : start + chunkSize;
 
-				Future<Long> future = customThreadPool.submit(
-						() -> searchList.subList(start, end)
-								.stream()
-								.filter(o -> Objects.equals(o, object))
-								.count()
-				);
+				Future<Long> future = customThreadPool.submit(() -> searchList.subList(start, end)
+						.stream()
+						.filter(o -> Objects.equals(o, object))
+						.count());
 				futures.add(future);
 			}
 
