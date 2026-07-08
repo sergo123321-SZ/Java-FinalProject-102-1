@@ -191,9 +191,8 @@ class CarTest {
 	void validation_productionYearIsInFuture_throwsIllegalArgumentException() {
 		int nextYear = Year.now().getValue() + 1;
 
-		assertThatThrownBy(
-				() -> Car.builder().setPower(200).setModel("Toyota Camry").setProductionYear(nextYear).build()
-		).as("Ожидалось исключение при годе производства в будущем").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Car.builder().setPower(200).setModel("Toyota Camry").setProductionYear(nextYear).build())
+				.as("Ожидалось исключение при годе производства в будущем").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Год производства должен быть в диапазоне от 1886 до текущего года");
 	}
 }

@@ -47,9 +47,7 @@ public class Barrel implements Comparable<Barrel> {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial
-		);
+		return String.format("Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial);
 	}
 
 	@Override

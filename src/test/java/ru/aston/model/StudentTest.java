@@ -189,39 +189,32 @@ class StudentTest {
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом номере группы")
 	void validation_groupNumberIsBlank_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Student.builder().setGroupNumber("").setAverageGrade(4.5).setRecordBookNumber("104857").build()
-		).as("Ожидалось исключение при пустом номере группы").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Student.builder().setGroupNumber("").setAverageGrade(4.5).setRecordBookNumber("104857").build())
+				.as("Ожидалось исключение при пустом номере группы").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Номер группы должен быть указан");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при среднем балле меньше 0.0")
 	void validation_averageGradeIsLessThanZero_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(-0.5).setRecordBookNumber("104857")
-						.build()
-		).as("Ожидалось исключение при среднем балле меньше 0.0").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(-0.5).setRecordBookNumber("104857")
+				.build()).as("Ожидалось исключение при среднем балле меньше 0.0").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при среднем балле больше 5.0")
 	void validation_averageGradeIsGreaterThanFive_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(5.1).setRecordBookNumber("104857")
-						.build()
-		).as("Ожидалось исключение при среднем балле больше 5.0").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(5.1).setRecordBookNumber("104857")
+				.build()).as("Ожидалось исключение при среднем балле больше 5.0").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
 	}
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при среднем балле равном Double.NaN(не число)")
 	void validation_averageGradeIsNaN_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(Double.NaN)
-						.setRecordBookNumber("104857").build()
-		).as("Ожидалось исключение при среднем балле равном Double.NaN(не число)")
+		assertThatThrownBy(() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(Double.NaN)
+				.setRecordBookNumber("104857").build()).as("Ожидалось исключение при среднем балле равном Double.NaN(не число)")
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
 	}
@@ -229,9 +222,8 @@ class StudentTest {
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом номере зачетной книжки")
 	void validation_recordBookNumberIsBlank_throwsIllegalArgumentException() {
-		assertThatThrownBy(
-				() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(4.5).setRecordBookNumber("   ").build()
-		).as("Ожидалось исключение при пустом номере зачетной книжки").isInstanceOf(IllegalArgumentException.class)
+		assertThatThrownBy(() -> Student.builder().setGroupNumber("АЯ-51").setAverageGrade(4.5).setRecordBookNumber("   ").build())
+				.as("Ожидалось исключение при пустом номере зачетной книжки").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Номер зачетной книжки должен быть указан");
 	}
 }
