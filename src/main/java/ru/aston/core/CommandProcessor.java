@@ -2,6 +2,7 @@ package ru.aston.core;
 
 
 import org.apache.commons.cli.*;
+
 import java.util.List;
 
 
@@ -15,9 +16,79 @@ public class CommandProcessor {
 			options.addOption(Option.builder(step.shortOpt)
 					.longOpt(step.longOpt)
 					.hasArg(step.hasArg)
-					.desc(step.description)
+					.desc(getDescription(step))
 					.build());
 		}
+	}
+
+	// @formatter:off
+	private String getDescription(CommandStep step) {
+		return switch (step) {
+			case EXIT -> TranslationManager.getExitOptionDescription();
+			case HELP -> TranslationManager.getHelpText("1.0", "TeamName");
+			case MODEL -> TranslationManager.getModelOptionDescription(getAcceptableOptionsString(step));
+			case LENGTH -> TranslationManager.getLengthOptionDescription(
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case DISPLAY -> TranslationManager.getDisplayOptionDescription(
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case SORT -> TranslationManager.getSortOptionDescription(
+					AppConstants.SortType.ASC.getValue(),
+					AppConstants.SortType.DESC.getValue(),
+					AppConstants.SortType.SPECIAL.getValue(),
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case CREATE -> TranslationManager.getCreateOptionDescription(
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case FILE -> TranslationManager.getFileOptionDescription(
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case EXPORT -> TranslationManager.getExportOptionDescription(
+					AppConstants.WriteType.APPEND.getValue(),
+					AppConstants.WriteType.OVERWRITE.getValue(),
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			case IMPORT -> TranslationManager.getImportOptionDescription(
+					AppConstants.WriteType.APPEND.getValue(),
+					AppConstants.WriteType.OVERWRITE.getValue(),
+					getRequiredStepsString(step),
+					getConflictingStepsString(step)
+			);
+			default -> throw new IllegalArgumentException("Unknown command step: " + step);
+		};
+	}
+	// @formatter:on
+
+	private String getAcceptableOptionsString(CommandStep step) {
+		if (step.acceptableVariants.isEmpty()) {
+			throw new IllegalArgumentException("No acceptable options for step: " + step);
+		}
+
+		return String.join(" | ", step.acceptableVariants);
+	}
+
+	private String getRequiredStepsString(CommandStep step) {
+		if (step.requiredSteps.isEmpty()) {
+			throw new IllegalArgumentException("No required steps for step: " + step);
+		}
+
+		return String.join(" | ", step.requiredSteps.stream().map(s -> s.longOpt).toList());
+	}
+
+	private String getConflictingStepsString(CommandStep step) {
+		if (step.conflictingSteps.isEmpty()) {
+			throw new IllegalArgumentException("No conflicting steps for step: " + step);
+		}
+
+		return String.join(" | ", step.conflictingSteps.stream().map(s -> s.longOpt).toList());
 	}
 
 	public void executeCommands(String[] commands) {
@@ -32,40 +103,44 @@ public class CommandProcessor {
 	}
 
 	private enum CommandStep {
-		EXIT("E", "exit", false, TranslationManager.getExitOptionDescription()),
-		MODEL("M", "model", true, TranslationManager.getModelOptionDescription()),
-		DISPLAY("D", "display", false, TranslationManager.getDisplayOptionDescription()),
-		SORT("S", "sort", true, TranslationManager.getSortOptionDescription(), List.of(MODEL)),
-		CREATE("C", "create", true, TranslationManager.getCreateOptionDescription(), List.of(MODEL)),
-		FILE("F", "file", true, TranslationManager.getFileOptionDescription(), List.of(MODEL)),
-		EXPORT("E", "export", true, TranslationManager.getExportOptionDescription(), List.of(FILE, MODEL)),
-		IMPORT("I", "import", true, TranslationManager.getImportOptionDescription(), List.of(FILE, MODEL));
+		EXIT("E", "exit", false),
+		HELP("H", "help", false),
+		MODEL("M", "model", true),
+		LENGTH("L", "length", false, List.of(MODEL)),
+		DISPLAY("D", "display", false, List.of(MODEL)),
+		SORT("S", "sort", true, List.of(MODEL)),
+		CREATE("C", "create", true, List.of(MODEL)),
+		FILE("F", "file", true, List.of(MODEL)),
+		EXPORT("E", "export", true, List.of(FILE, MODEL)),
+		IMPORT("I", "import", true, List.of(FILE, MODEL));
 
 		static {
+			LENGTH.conflictingSteps = List.of(DISPLAY);
+			DISPLAY.conflictingSteps = List.of(LENGTH);
 			EXPORT.conflictingSteps = List.of(IMPORT, CREATE);
 			IMPORT.conflictingSteps = List.of(EXPORT, CREATE);
 			CREATE.conflictingSteps = List.of(IMPORT, EXPORT);
 		}
 
-		final String shortOpt;
-		final String longOpt;
-		final boolean hasArg;
-		final String description;
-		List<CommandStep> requiredSteps;
-		List<CommandStep> conflictingSteps;
+		public final String shortOpt;
+		public final String longOpt;
+		public final boolean hasArg;
+		public List<String> acceptableVariants;
+		public List<CommandStep> requiredSteps;
+		public List<CommandStep> conflictingSteps;
 
-		CommandStep(String shortOpt, String longOpt, boolean hasArg, String description) {
-			this.shortOpt = shortOpt;
-			this.longOpt = longOpt;
-			this.hasArg = hasArg;
-			this.description = description;
-			this.requiredSteps = List.of();
+		CommandStep(String shortOpt, String longOpt, boolean hasArg, List<CommandStep> requiredSteps) {
+			this(shortOpt, longOpt, hasArg);
+			this.requiredSteps = requiredSteps;
 			this.conflictingSteps = List.of();
 		}
 
-		CommandStep(String shortOpt, String longOpt, boolean hasArg, String description, List<CommandStep> requiredSteps) {
-			this(shortOpt, longOpt, hasArg, description);
-			this.requiredSteps = requiredSteps;
+		CommandStep(String shortOpt, String longOpt, boolean hasArg) {
+			this.shortOpt = shortOpt;
+			this.longOpt = longOpt;
+			this.hasArg = hasArg;
+			this.acceptableVariants = List.of();
+			this.requiredSteps = List.of();
 			this.conflictingSteps = List.of();
 		}
 	}
