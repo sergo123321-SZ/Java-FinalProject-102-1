@@ -13,6 +13,7 @@ public class CommandProcessor {
 	private final CommandLineParser parser = new DefaultParser();
 	private final HelpFormatter formatter = new HelpFormatter();
 	private final Options options = new Options();
+	private final CascadedExecutor executor = new CascadedExecutor();
 
 	public CommandProcessor() {
 		for (CommandStep step : CommandStep.values()) {
@@ -21,6 +22,18 @@ public class CommandProcessor {
 					.hasArg(step.hasArg)
 					.desc(getDescription(step))
 					.build());
+		}
+		/// \todo add executor.addExecutor();
+	}
+
+	public void executeCommands(String[] commands) {
+		try {
+			CommandLine cmd = parser.parse(options, commands);
+			executor.execute(cmd);
+		}
+		catch (ParseException e) {
+			System.out.println("Ошибка парсинга: " + e.getMessage());
+			formatter.printHelp("", options);
 		}
 	}
 
@@ -92,17 +105,6 @@ public class CommandProcessor {
 		}
 
 		return String.join(" | ", step.conflictingSteps.stream().map(s -> s.longOpt).toList());
-	}
-
-	public void executeCommands(String[] commands) {
-		try {
-			CommandLine cmd = parser.parse(options, commands);
-
-		}
-		catch (ParseException e) {
-			System.out.println("Ошибка парсинга: " + e.getMessage());
-			formatter.printHelp("", options);
-		}
 	}
 
 	enum CommandStep {
