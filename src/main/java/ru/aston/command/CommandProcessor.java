@@ -105,7 +105,7 @@ public class CommandProcessor {
 		}
 	}
 
-	private enum CommandStep {
+	enum CommandStep {
 		EXIT("E", "exit", false),
 		HELP("H", "help", false),
 		MODEL("M", "model", true),
