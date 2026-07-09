@@ -27,11 +27,11 @@ public class CascadedExecutor implements Executor {
 	}
 
 	@Override
-	public boolean checkOptions(@NotNull CommandLine options) {
+	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		checkState();
 
 		for (Executor executor : executors) {
-			if (!executor.checkOptions(options)) {
+			if (!executor.checkOptions(commandLine)) {
 				lastError = executor.getLastError();
 
 				return false;
