@@ -1,6 +1,7 @@
 package ru.aston.command;
 
 
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,12 +13,12 @@ public class CascadedExecutor implements Executor {
 	private final List<Executor> executors = new LinkedList<>();
 	private String lastError = null;
 
-	public void addExecutor(Executor executor) {
+	public void addExecutor(@NotNull final Executor executor) {
 		executors.add(executor);
 	}
 
 	@Override
-	public void execute(@NotNull Options options) {
+	public void execute(@NotNull CommandLine options) {
 		checkState();
 
 		for (Executor executor : executors) {
@@ -26,7 +27,7 @@ public class CascadedExecutor implements Executor {
 	}
 
 	@Override
-	public boolean checkOptions(@NotNull Options options) {
+	public boolean checkOptions(@NotNull CommandLine options) {
 		checkState();
 
 		for (Executor executor : executors) {
