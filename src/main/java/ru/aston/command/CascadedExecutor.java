@@ -2,7 +2,6 @@ package ru.aston.command;
 
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
@@ -10,20 +9,28 @@ import java.util.List;
 
 
 public class CascadedExecutor implements Executor {
-	private final List<Executor> executors = new LinkedList<>();
+	private final List<BaseExecutor> executors = new LinkedList<>();
 	private String lastError = null;
 
-	public void addExecutor(@NotNull final Executor executor) {
-		executors.add(executor);
+	public CascadedExecutor addExecutor(@NotNull final Executor executor) {
+		if (!(executor instanceof BaseExecutor e)) {
+			throw new IllegalArgumentException("Only package BaseExecutors supported");
+		}
+
+		executors.add(e);
+		return this;
 	}
 
 	@Override
-	public void execute(@NotNull CommandLine options) {
+	public ExecutionData execute(@NotNull CommandLine options) {
 		checkState();
+		ExecutionData result = new ExecutionData();
 
-		for (Executor executor : executors) {
-			executor.execute(options);
+		for (BaseExecutor executor : executors) {
+			executor.doExec(options, result);
 		}
+
+		return result;
 	}
 
 	@Override

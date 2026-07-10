@@ -14,6 +14,18 @@ abstract class BaseExecutor implements Executor {
 	protected String lastError = null;
 
 	@Override
+	public ExecutionData execute(@NotNull CommandLine options) {
+		if (!checkOptions(options)) {
+			return null;
+		}
+
+		ExecutionData result = new ExecutionData();
+		doExec(options, result);
+
+		return result;
+	}
+
+	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		lastError = null;
 
@@ -59,18 +71,14 @@ abstract class BaseExecutor implements Executor {
 			return false;
 		}
 
-		boolean hasConflictingOptions = step.conflictingSteps.stream()
-				.map(s -> s.shortOpt)
-				.anyMatch(commandLine::hasOption);
+		boolean hasConflictingOptions = step.conflictingSteps.stream().map(s -> s.shortOpt).anyMatch(commandLine::hasOption);
 
 		if (hasConflictingOptions) {
 			lastError = "Conflicting options provided for: " + getOptionsDisplay(step.conflictingSteps);
 			return false;
 		}
 
-		boolean hasAllRequiredOptions = step.requiredSteps.stream()
-				.map(s -> s.shortOpt)
-				.allMatch(commandLine::hasOption);
+		boolean hasAllRequiredOptions = step.requiredSteps.stream().map(s -> s.shortOpt).allMatch(commandLine::hasOption);
 
 		if (!hasAllRequiredOptions) {
 			lastError = "Missing required options. Please ensure the following options are provided: "
@@ -81,7 +89,8 @@ abstract class BaseExecutor implements Executor {
 		return true;
 	}
 
-	abstract boolean isStepSupported(@NotNull CommandProcessor.CommandStep step);
+	abstract void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData);
+
 
 	BaseExecutor(List<CommandProcessor.CommandStep> requiredSteps) {
 		this.requiredSteps = requiredSteps;

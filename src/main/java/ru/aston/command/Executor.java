@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 public interface Executor {
-	void execute(@NotNull CommandLine options);
+	ExecutionData execute(@NotNull CommandLine options);
 
 	boolean checkOptions(@NotNull CommandLine commandLine);
 
