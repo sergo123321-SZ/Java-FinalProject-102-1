@@ -19,11 +19,14 @@ public class TypeCollectionChanger {
 		Object[] arrayObjects = objects.toArray();
 		if (arrayObjects[0] instanceof Student) {
 			return new StudentCollectionSorter(new StudentSortTypeChanger());
-		} else if (arrayObjects[0] instanceof Car) {
+		}
+		else if (arrayObjects[0] instanceof Car) {
 			return new CarCollectionSorter(new CarSortTypeChanger());
-		} else if (arrayObjects[0] instanceof Barrel) {
+		}
+		else if (arrayObjects[0] instanceof Barrel) {
 			return new BarrelCollectionSorter(new BarrelSortTypeChanger());
-		} else {
+		}
+		else {
 			throw new IllegalArgumentException("Неизвестный тип данных");
 		}
 	}

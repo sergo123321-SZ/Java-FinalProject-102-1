@@ -54,7 +54,8 @@ public class CarCustomSorter implements CarSorter {
 				while (evenValueTrim[rightMarker].getPower() > pivot.getPower()) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (evenValueTrim[leftMarker].getPower() > pivot.getPower()) {
 					leftMarker++;
 				}

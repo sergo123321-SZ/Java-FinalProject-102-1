@@ -30,13 +30,16 @@ public class BarrelMergeSorter implements BarrelSorter {
 			if (OrderType.NATURAL_ORDER == orderType) {
 				if (barrels[i].compareTo(barrels[j]) <= 0) {
 					temp[k++] = barrels[i++];
-				} else {
+				}
+				else {
 					temp[k++] = barrels[j++];
 				}
-			} else {
+			}
+			else {
 				if (barrels[i].compareTo(barrels[j]) >= 0) {
 					temp[k++] = barrels[i++];
-				} else {
+				}
+				else {
 					temp[k++] = barrels[j++];
 				}
 			}

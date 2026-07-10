@@ -7,9 +7,11 @@ public class BarrelSortTypeChanger {
 	public BarrelSorter changeTypeSort(SortType sortType) {
 		if (SortType.QUICK_SORT == sortType) {
 			return new BarrelQuickSorter();
-		} else if (SortType.MERGE_SORT == sortType) {
+		}
+		else if (SortType.MERGE_SORT == sortType) {
 			return new BarrelMergeSorter();
-		} else {
+		}
+		else {
 			return new BarrelCustomSorter();
 		}
 	}

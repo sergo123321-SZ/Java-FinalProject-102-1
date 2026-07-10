@@ -22,7 +22,8 @@ public class BarrelQuickSorter implements BarrelSorter {
 				while (barrels[rightMarker].compareTo(pivot) > 0) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (barrels[leftMarker].compareTo(pivot) > 0) {
 					leftMarker++;
 				}

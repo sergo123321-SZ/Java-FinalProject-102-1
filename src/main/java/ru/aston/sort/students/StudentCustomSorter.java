@@ -52,7 +52,8 @@ public class StudentCustomSorter implements StudentSorter {
 				while (evenValueTrim[rightMarker].getAverageGrade() > pivot.getAverageGrade()) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (evenValueTrim[leftMarker].getAverageGrade() > pivot.getAverageGrade()) {
 					leftMarker++;
 				}
