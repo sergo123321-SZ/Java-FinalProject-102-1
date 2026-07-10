@@ -66,8 +66,14 @@ public class BarrelJsonReader {
 			return List.of();
 		}
 
-		try {
-			Collection<Barrel> barrels = objectMapper.readValue(path.toFile(), new TypeReference<>() {
+		try (JsonParser parser = objectMapper.getFactory().createParser(path.toFile())) {
+			JsonToken currentToken = parser.nextToken();
+			if (currentToken != JsonToken.START_ARRAY) {
+				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				return List.of();
+			}
+
+			Collection<Barrel> barrels = objectMapper.readValue(parser, new TypeReference<>() {
 			});
 			return (barrels != null) ? barrels : List.of();
 		}
