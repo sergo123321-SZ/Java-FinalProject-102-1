@@ -22,7 +22,8 @@ public class StudentQuickSorter implements StudentSorter {
 				while (students[rightMarker].compareTo(pivot) > 0) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (students[leftMarker].compareTo(pivot) > 0) {
 					leftMarker++;
 				}

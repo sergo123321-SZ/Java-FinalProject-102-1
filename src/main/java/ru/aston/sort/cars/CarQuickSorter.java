@@ -22,7 +22,8 @@ public class CarQuickSorter implements CarSorter {
 				while (cars[rightMarker].compareTo(pivot) > 0) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (cars[leftMarker].compareTo(pivot) > 0) {
 					leftMarker++;
 				}

@@ -21,7 +21,7 @@ public class StudentMergeSorter implements StudentSorter {
 	}
 
 	private static void mergeAsc(Student[] students, int left, int mid, int right, Student[] temp,
-								 OrderType orderType)
+			OrderType orderType)
 	{
 		int i = left; // индекс левой части
 		int j = mid + 1; // индекс правой части
@@ -32,13 +32,16 @@ public class StudentMergeSorter implements StudentSorter {
 			if (OrderType.NATURAL_ORDER == orderType) {
 				if (students[i].compareTo(students[j]) <= 0) {
 					temp[k++] = students[i++];
-				} else {
+				}
+				else {
 					temp[k++] = students[j++];
 				}
-			} else {
+			}
+			else {
 				if (students[i].compareTo(students[j]) >= 0) {
 					temp[k++] = students[i++];
-				} else {
+				}
+				else {
 					temp[k++] = students[j++];
 				}
 			}

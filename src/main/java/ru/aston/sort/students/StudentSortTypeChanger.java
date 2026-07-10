@@ -7,9 +7,11 @@ public class StudentSortTypeChanger {
 	public StudentSorter changeTypeSort(SortType sortType) {
 		if (SortType.QUICK_SORT == sortType) {
 			return new StudentQuickSorter();
-		} else if (SortType.MERGE_SORT == sortType) {
+		}
+		else if (SortType.MERGE_SORT == sortType) {
 			return new StudentMergeSorter();
-		} else {
+		}
+		else {
 			return new StudentCustomSorter();
 		}
 	}

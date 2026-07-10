@@ -30,13 +30,16 @@ public class CarMergeSorter implements CarSorter {
 			if (OrderType.NATURAL_ORDER == orderType) {
 				if (cars[i].compareTo(cars[j]) <= 0) {
 					temp[k++] = cars[i++];
-				} else {
+				}
+				else {
 					temp[k++] = cars[j++];
 				}
-			} else {
+			}
+			else {
 				if (cars[i].compareTo(cars[j]) >= 0) {
 					temp[k++] = cars[i++];
-				} else {
+				}
+				else {
 					temp[k++] = cars[j++];
 				}
 			}

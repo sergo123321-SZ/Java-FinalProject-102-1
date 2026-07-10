@@ -52,7 +52,8 @@ public class BarrelCustomSorter implements BarrelSorter {
 				while (evenValueTrim[rightMarker].getVolume() > pivot.getVolume()) {
 					rightMarker--;
 				}
-			} else {
+			}
+			else {
 				while (evenValueTrim[leftMarker].getVolume() > pivot.getVolume()) {
 					leftMarker++;
 				}
