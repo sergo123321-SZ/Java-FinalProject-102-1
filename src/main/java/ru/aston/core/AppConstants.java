@@ -35,4 +35,10 @@ public class AppConstants {
 			return value;
 		}
 	}
+
+	public enum ModelType {
+		CARS,
+		STUDENTS,
+		BARRELS
+	}
 }
