@@ -56,6 +56,7 @@ public class ModelGeneration extends BaseExecutor {
 		}
 
 		try {
+			/// \todo implement it
 			// String generationRuleValue =
 			// commandLine.getOptionValue(CommandProcessor.CommandStep.GENERATION_RULE.shortOpt);
 			// generationRule = AppConstants.WriteType.valueOf(generationRuleValue);
