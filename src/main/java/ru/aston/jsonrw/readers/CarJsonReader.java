@@ -66,8 +66,15 @@ public class CarJsonReader {
 			return List.of();
 		}
 
-		try {
-			Collection<Car> cars = objectMapper.readValue(path.toFile(), new TypeReference<>() {
+		try (JsonParser parser = objectMapper.getFactory().createParser(path.toFile())) {
+			JsonToken currentToken = parser.nextToken();
+
+			if (currentToken != JsonToken.START_ARRAY) {
+				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				return List.of();
+			}
+
+			Collection<Car> cars = objectMapper.readValue(parser, new TypeReference<>() {
 			});
 			return (cars != null) ? cars : List.of();
 		}
