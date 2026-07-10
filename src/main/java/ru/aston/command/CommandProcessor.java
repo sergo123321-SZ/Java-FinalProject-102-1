@@ -8,12 +8,13 @@ import ru.aston.core.TranslationManager;
 
 import java.util.List;
 
-
+/// \todo translate all strings
 public class CommandProcessor {
 	private final CommandLineParser parser = new DefaultParser();
 	private final HelpFormatter formatter = new HelpFormatter();
 	private final Options options = new Options();
 	private final CascadedExecutor executor = new CascadedExecutor();
+	private static final String HELP_SYNTAX = "java -jar FinalJavaProject.jar";
 
 	public CommandProcessor() {
 		for (CommandStep step : CommandStep.values()) {
@@ -23,17 +24,22 @@ public class CommandProcessor {
 					.desc(getDescription(step))
 					.build());
 		}
-		/// \todo add executor.addExecutor();
+		executor.addExecutor(new ModelSelection()).addExecutor(new ModelGeneration()).addExecutor(new ModelDisplay());
 	}
 
 	public void executeCommands(String[] commands) {
 		try {
 			CommandLine cmd = parser.parse(options, commands);
+			if (!executor.checkOptions(cmd)) {
+				System.out.println("Ошибка валидации: " + executor.getLastError());
+				formatter.printHelp(HELP_SYNTAX, options);
+				return;
+			}
 			executor.execute(cmd);
 		}
 		catch (ParseException e) {
 			System.out.println("Ошибка парсинга: " + e.getMessage());
-			formatter.printHelp("", options);
+			formatter.printHelp(HELP_SYNTAX, options);
 		}
 	}
 
@@ -93,7 +99,7 @@ public class CommandProcessor {
 
 	private @NotNull String getRequiredStepsString(@NotNull CommandStep step) {
 		if (step.requiredSteps.isEmpty()) {
-			throw new IllegalArgumentException("No required steps for step: " + step);
+			return "-";
 		}
 
 		return String.join(" | ", step.requiredSteps.stream().map(s -> s.longOpt).toList());
@@ -101,14 +107,14 @@ public class CommandProcessor {
 
 	private @NotNull String getConflictingStepsString(@NotNull CommandStep step) {
 		if (step.conflictingSteps.isEmpty()) {
-			throw new IllegalArgumentException("No conflicting steps for step: " + step);
+			return "-";
 		}
 
 		return String.join(" | ", step.conflictingSteps.stream().map(s -> s.longOpt).toList());
 	}
 
 	enum CommandStep {
-		EXIT("E", "exit", false),
+		EXIT("Q", "exit", false),
 		HELP("H", "help", false),
 		MODEL("M", "model", true),
 		LENGTH("L", "length", false, List.of(MODEL)),
@@ -120,6 +126,8 @@ public class CommandProcessor {
 		IMPORT("I", "import", true, List.of(FILE, MODEL));
 
 		static {
+			MODEL.acceptableVariants = List
+					.of(AppConstants.ModelType.CARS.name(), AppConstants.ModelType.STUDENTS.name(), AppConstants.ModelType.BARRELS.name());
 			LENGTH.conflictingSteps = List.of(DISPLAY);
 			DISPLAY.conflictingSteps = List.of(LENGTH);
 			EXPORT.conflictingSteps = List.of(IMPORT, CREATE);
@@ -130,7 +138,7 @@ public class CommandProcessor {
 		public final String shortOpt;
 		public final String longOpt;
 		public final boolean hasArg;
-		public final List<String> acceptableVariants;
+		public List<String> acceptableVariants;
 		public List<CommandStep> requiredSteps;
 		public List<CommandStep> conflictingSteps;
 

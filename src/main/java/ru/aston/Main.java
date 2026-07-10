@@ -1,15 +1,18 @@
 package ru.aston;
 
-import ru.aston.randomgenerator.BarrelRandomGenerator;
-import ru.aston.randomgenerator.CarRandomGenerator;
-import ru.aston.randomgenerator.StudentRandomGenerator;
+import ru.aston.command.CommandProcessor;
 
 public class Main {
 	public static void main(String[] args) {
 
-		BarrelRandomGenerator.generate(5).stream().forEach(System.out::println);
-		CarRandomGenerator.generate(5).stream().forEach(System.out::println);
-		StudentRandomGenerator.generate(5).stream().forEach(System.out::println);
+		CommandProcessor p = new CommandProcessor();
 
+		p.executeCommands(new String[]{
+				"-M",
+				"BARRELS",
+				"-C",
+				"10",
+				"-D"
+		});
 	}
 }
