@@ -16,7 +16,8 @@ public class ExecutionData {
 	public Collection<Car> carCollection = null;
 	public Collection<Student> studentCollection = null;
 	public Collection<Barrel> barrelCollection = null;
-	public String filePath = null;
+	public String importFilePath = null;
+	public String exportFilePath = null;
 	public AppConstants.ModelType modelType = null;
 	public AppConstants.SortType sortType = null;
 	public AppConstants.WriteMode writeMode = null;
