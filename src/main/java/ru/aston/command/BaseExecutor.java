@@ -75,13 +75,6 @@ abstract class BaseExecutor implements Executor {
 			return false;
 		}
 
-		boolean hasConflictingOptions = step.conflictingSteps.stream().map(s -> s.shortOpt).anyMatch(commandLine::hasOption);
-
-		if (hasConflictingOptions) {
-			lastError = "Conflicting options provided for: " + getOptionsDisplay(step.conflictingSteps);
-			return false;
-		}
-
 		boolean hasAllRequiredOptions = step.requiredSteps.stream().map(s -> s.shortOpt).allMatch(commandLine::hasOption);
 
 		if (!hasAllRequiredOptions) {
