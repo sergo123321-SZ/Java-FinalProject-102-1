@@ -30,6 +30,7 @@ public class CommandProcessor {
 
 	public void executeCommands(String[] commands, ExecutionData executionData) {
 		try {
+			executionData.modelType = null;
 			CommandLine cmd = parser.parse(options, commands);
 			if (cmd.hasOption(CommandStep.EXIT.shortOpt)) {
 				executionData.isExitRequested = true;
