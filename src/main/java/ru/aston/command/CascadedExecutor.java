@@ -22,17 +22,14 @@ public class CascadedExecutor implements Executor {
 	}
 
 	@Override
-	public ExecutionData execute(@NotNull CommandLine options) {
+	public void execute(@NotNull CommandLine options, ExecutionData executionData) {
 		checkState();
-		ExecutionData result = new ExecutionData();
 
 		for (BaseExecutor executor : executors) {
 			if (executor.canExecute(options)) {
-				executor.doExec(options, result);
+				executor.doExec(options, executionData);
 			}
 		}
-
-		return result;
 	}
 
 	@Override

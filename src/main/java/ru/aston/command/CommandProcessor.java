@@ -28,27 +28,27 @@ public class CommandProcessor {
 				.addExecutor(new ModelDisplayExecutor());
 	}
 
-	public ExecutionData executeCommands(String[] commands) {
+	public void executeCommands(String[] commands, ExecutionData executionData) {
 		try {
 			CommandLine cmd = parser.parse(options, commands);
 			if (cmd.hasOption(CommandStep.EXIT.shortOpt)) {
-				return null;
+				executionData.isExitRequested = true;
+				return;
 			}
 			if (cmd.hasOption(CommandStep.HELP.shortOpt)) {
 				formatter.printHelp(HELP_SYNTAX, options);
-				return new ExecutionData();
+				return;
 			}
 			if (!executor.checkOptions(cmd)) {
 				System.out.println("Ошибка валидации: " + executor.getLastError());
 				formatter.printHelp(HELP_SYNTAX, options);
-				return null;
+				return;
 			}
-			return executor.execute(cmd);
+			executor.execute(cmd, executionData);
 		}
 		catch (ParseException e) {
 			System.out.println("Ошибка парсинга: " + e.getMessage());
 			formatter.printHelp(HELP_SYNTAX, options);
-			return new ExecutionData();
 		}
 	}
 
