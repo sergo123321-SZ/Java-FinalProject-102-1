@@ -47,7 +47,7 @@ public class ModelSelectionExecutor extends BaseExecutor {
 			default -> normalized;
 		};
 
-		return AppConstants.ModelType.valueOf(selectedModelId);
+		return AppConstants.ModelType.valueOf(normalized);
 	}
 
 }
