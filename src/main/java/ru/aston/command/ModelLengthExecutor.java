@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ModelLengthExecutor extends BaseExecutor {
 	public ModelLengthExecutor() {
-		super(List.of(CommandProcessor.CommandStep.RESET));
+		super(List.of(CommandProcessor.CommandStep.LENGTH));
 	}
 
 	@Override

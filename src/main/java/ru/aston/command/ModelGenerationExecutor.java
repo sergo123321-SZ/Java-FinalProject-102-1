@@ -3,7 +3,6 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
-import ru.aston.core.AppConstants.WriteMode;
 import ru.aston.randomgenerator.BarrelRandomGenerator;
 import ru.aston.randomgenerator.CarRandomGenerator;
 import ru.aston.randomgenerator.StudentRandomGenerator;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class ModelGenerationExecutor extends BaseExecutor {
 	private int size = 0;
-	private WriteMode generationRule;
 
 	ModelGenerationExecutor() {
 		super(List.of(CommandProcessor.CommandStep.CREATE));
