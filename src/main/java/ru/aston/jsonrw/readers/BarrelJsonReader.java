@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.MappingIterator;
 
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Barrel;
@@ -42,12 +41,10 @@ public class BarrelJsonReader {
 				return;
 			}
 
-			MappingIterator<Barrel> it = objectMapper.readValues(parser, Barrel.class);
-			while (it.hasNext()) {
-				Barrel barrel = it.next();
-				if (barrel != null) {
-					collection.add(barrel);
-				}
+			Collection<Barrel> barrelsFromFile = objectMapper.readValue(parser, new TypeReference<>() {
+			});
+			if (barrelsFromFile != null && !barrelsFromFile.isEmpty()) {
+				collection.addAll(barrelsFromFile);
 			}
 		}
 		catch (Exception e) {

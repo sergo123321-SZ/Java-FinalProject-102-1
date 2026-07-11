@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.MappingIterator;
 
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Car;
@@ -42,12 +41,10 @@ public class CarJsonReader {
 				return;
 			}
 
-			MappingIterator<Car> it = objectMapper.readValues(parser, Car.class);
-			while (it.hasNext()) {
-				Car car = it.next();
-				if (car != null) {
-					collection.add(car);
-				}
+			Collection<Car> carsFromFile = objectMapper.readValue(parser, new TypeReference<>() {
+			});
+			if (carsFromFile != null && !carsFromFile.isEmpty()) {
+				collection.addAll(carsFromFile);
 			}
 		}
 		catch (Exception e) {
