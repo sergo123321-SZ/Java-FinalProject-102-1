@@ -8,16 +8,13 @@ import ru.aston.core.AppConstants;
 import java.util.Locale;
 import java.util.List;
 
-public class ModelSelection extends BaseExecutor {
-	public ModelSelection() {
+public class ModelSelectionExecutor extends BaseExecutor {
+	public ModelSelectionExecutor() {
 		super(List.of(CommandProcessor.CommandStep.MODEL));
 	}
 
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
-		if (!super.checkOptions(commandLine)) {
-			return false;
-		}
 		String selectedModelId = commandLine.getOptionValue(CommandProcessor.CommandStep.MODEL.shortOpt);
 		if (selectedModelId == null) {
 			throw new IllegalStateException("model id is required");

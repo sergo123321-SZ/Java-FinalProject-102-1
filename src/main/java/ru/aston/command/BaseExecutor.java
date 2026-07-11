@@ -13,20 +13,7 @@ abstract class BaseExecutor implements Executor {
 	protected List<CommandProcessor.CommandStep> requiredSteps;
 	protected String lastError = null;
 
-	@Override
-	public ExecutionData execute(@NotNull CommandLine options) {
-		if (!checkOptions(options)) {
-			return null;
-		}
-
-		ExecutionData result = new ExecutionData();
-		doExec(options, result);
-
-		return result;
-	}
-
-	@Override
-	public boolean checkOptions(@NotNull CommandLine commandLine) {
+	public boolean canExecute(@NotNull CommandLine commandLine) {
 		lastError = null;
 
 		boolean hasAllRequiredOptions = requiredSteps.stream().map(s -> s.shortOpt).allMatch(commandLine::hasOption);
@@ -36,6 +23,23 @@ abstract class BaseExecutor implements Executor {
 		}
 
 		return Arrays.stream(commandLine.getOptions()).allMatch(option -> checkOption(option, commandLine));
+	}
+
+	@Override
+	public boolean checkOptions(@NotNull CommandLine commandLine) {
+		return true;
+	}
+
+	@Override
+	public ExecutionData execute(@NotNull CommandLine options) {
+		if (!canExecute(options)) {
+			return null;
+		}
+
+		ExecutionData result = new ExecutionData();
+		doExec(options, result);
+
+		return result;
 	}
 
 	@Override
@@ -90,7 +94,6 @@ abstract class BaseExecutor implements Executor {
 	}
 
 	abstract void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData);
-
 
 	BaseExecutor(List<CommandProcessor.CommandStep> requiredSteps) {
 		this.requiredSteps = requiredSteps;

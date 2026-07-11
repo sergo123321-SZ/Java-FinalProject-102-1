@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class ModelDisplay extends BaseExecutor {
+public class ModelDisplayExecutor extends BaseExecutor {
 
-	public ModelDisplay() {
+	public ModelDisplayExecutor() {
 		super(List.of(CommandProcessor.CommandStep.DISPLAY));
 	}
 
@@ -22,6 +22,6 @@ public class ModelDisplay extends BaseExecutor {
 			case STUDENTS -> executionData.studentCollection;
 			default -> throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
 		};
-		collection.stream().forEach(System.out::println);
+		collection.forEach(System.out::println);
 	}
 }
