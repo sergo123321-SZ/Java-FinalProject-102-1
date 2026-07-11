@@ -36,8 +36,8 @@ public class CascadedExecutor implements Executor {
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		checkState();
 
-		for (Executor executor : executors) {
-			if (!executor.checkOptions(commandLine)) {
+		for (BaseExecutor executor : executors) {
+			if (executor.canExecute(commandLine) && !executor.checkOptions(commandLine)) {
 				lastError = executor.getLastError();
 
 				return false;

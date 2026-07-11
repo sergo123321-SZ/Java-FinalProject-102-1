@@ -39,7 +39,7 @@ public class ModelSelectionExecutor extends BaseExecutor {
 	}
 
 	private @NotNull AppConstants.ModelType parseModelType(@NotNull String selectedModelId) {
-		String normalized = selectedModelId.trim().toUpperCase(Locale.ROOT);
+		String normalized = selectedModelId.trim().toUpperCase();
 		normalized = switch (normalized) {
 			case "CAR" -> AppConstants.ModelType.CARS.name();
 			case "STUDENT" -> AppConstants.ModelType.STUDENTS.name();

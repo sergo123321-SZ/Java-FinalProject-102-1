@@ -22,6 +22,11 @@ public class ModelDisplayExecutor extends BaseExecutor {
 			case STUDENTS -> executionData.studentCollection;
 			default -> throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
 		};
-		collection.forEach(System.out::println);
+		if (collection != null && !collection.isEmpty()) {
+			collection.forEach(System.out::println);
+		}
+		else {
+			System.out.println("Nothing to display. The collection is empty.");
+		}
 	}
 }
