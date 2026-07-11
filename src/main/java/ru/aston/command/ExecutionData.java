@@ -10,6 +10,7 @@ import java.util.Collection;
 
 
 public class ExecutionData {
+	public boolean isExitRequested = false;
 	public String lastError = null;
 	public String outputString = null;
 	public Collection<Car> carCollection = null;

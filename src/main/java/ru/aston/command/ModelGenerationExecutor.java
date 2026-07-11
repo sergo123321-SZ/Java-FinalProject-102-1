@@ -41,6 +41,9 @@ public class ModelGenerationExecutor extends BaseExecutor {
 
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
+		if (!canExecute(commandLine)) {
+			return true;
+		}
 		try {
 			String createOptionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.CREATE.shortOpt);
 			size = Integer.parseInt(createOptionValue);
@@ -49,19 +52,6 @@ public class ModelGenerationExecutor extends BaseExecutor {
 			lastError = "'create' option must be a positive integer";
 			return false;
 		}
-
-		try {
-			/// \todo implement it
-			// String generationRuleValue =
-			// commandLine.getOptionValue(CommandProcessor.CommandStep.GENERATION_RULE.shortOpt);
-			// generationRule = AppConstants.WriteType.valueOf(generationRuleValue);
-			generationRule = WriteMode.OVERWRITE;
-		}
-		catch (Exception e) {
-			lastError = "'generationRule' option is invalid";
-			return false;
-		}
-
 
 		return true;
 	}

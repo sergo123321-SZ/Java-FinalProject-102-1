@@ -31,15 +31,13 @@ abstract class BaseExecutor implements Executor {
 	}
 
 	@Override
-	public ExecutionData execute(@NotNull CommandLine options) {
+	public void execute(@NotNull CommandLine options, ExecutionData executionData) {
 		if (!canExecute(options)) {
-			return null;
+			return;
 		}
 
 		ExecutionData result = new ExecutionData();
 		doExec(options, result);
-
-		return result;
 	}
 
 	@Override
