@@ -50,6 +50,9 @@ public class CommandProcessor {
 			case EXIT -> TranslationManager.getExitOptionDescription();
 			case HELP -> TranslationManager.getHelpText("1.0", "TeamName");
 			case MODEL -> TranslationManager.getModelOptionDescription(getAcceptableOptionsString(step));
+			case RESET -> TranslationManager.getResetOptionDescription(
+					getRequiredStepsString(step)
+			);
 			case LENGTH -> TranslationManager.getLengthOptionDescription(
 					getRequiredStepsString(step)
 			);
@@ -70,6 +73,10 @@ public class CommandProcessor {
 			);
 			case IMPORT -> TranslationManager.getImportOptionDescription(
 					getRequiredStepsString(step)
+			);
+			case WRITE_MODE -> TranslationManager.getWriteModeOptionDescription(
+					AppConstants.WriteMode.APPEND.getValue(),
+					AppConstants.WriteMode.OVERWRITE.getValue()
 			);
 			default -> throw new IllegalArgumentException("Unknown command step: " + step);
 		};
@@ -96,12 +103,14 @@ public class CommandProcessor {
 		EXIT("Q", "exit", false),
 		HELP("H", "help", false),
 		MODEL("M", "model", true),
+		RESET("R", "reset", false),
 		LENGTH("L", "length", false, List.of(MODEL)),
 		DISPLAY("D", "display", false, List.of(MODEL)),
 		SORT("S", "sort", true, List.of(MODEL)),
 		CREATE("C", "create", true, List.of(MODEL)),
 		EXPORT("E", "export", true, List.of(MODEL)),
-		IMPORT("I", "import", true, List.of(MODEL));
+		IMPORT("I", "import", true, List.of(MODEL)),
+		WRITE_MODE("W", "write-mode", true);
 
 		static {
 			MODEL.acceptableVariants = List

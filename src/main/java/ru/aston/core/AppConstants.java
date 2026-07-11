@@ -21,13 +21,13 @@ public class AppConstants {
 		}
 	}
 
-	public enum WriteType {
+	public enum WriteMode {
 		APPEND("A"),
 		OVERWRITE("W");
 
 		private final String value;
 
-		WriteType(String value) {
+		WriteMode(String value) {
 			this.value = value;
 		}
 

@@ -18,5 +18,5 @@ public class ExecutionData {
 	public String filePath = null;
 	public AppConstants.ModelType modelType = null;
 	public AppConstants.SortType sortType = null;
-	public AppConstants.WriteType writeType = null;
+	public AppConstants.WriteMode writeMode = null;
 }

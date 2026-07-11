@@ -44,6 +44,10 @@ public class TranslationManager {
 		return getString("option.model.description", acceptableOptions);
 	}
 
+	public static String getResetOptionDescription(String requiredSteps) {
+		return getString("option.reset.description", requiredSteps);
+	}
+
 	public static String getLengthOptionDescription(String requiredSteps) {
 		return getString("option.length.description", requiredSteps);
 	}
@@ -75,5 +79,9 @@ public class TranslationManager {
 			String requiredSteps)
 	{
 		return getString("option.export.description", requiredSteps);
+	}
+
+	public static String getWriteModeOptionDescription(String addVariant, String overwriteVariant) {
+		return getString("option.write-mode.description", addVariant, overwriteVariant);
 	}
 }
