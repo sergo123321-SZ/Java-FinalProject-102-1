@@ -2,9 +2,9 @@ package ru.aston.sort.students;
 
 import org.jetbrains.annotations.NotNull;
 import ru.aston.model.Student;
+import ru.aston.sort.CollectionSorter;
 import ru.aston.sort.OrderType;
 import ru.aston.sort.SortType;
-import ru.aston.sort.CollectionSorter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class StudentCollectionSorter implements CollectionSorter {
 
-	private StudentSortTypeChanger studentSortTypeChanger;
+	private final StudentSortTypeChanger studentSortTypeChanger;
 
 	public StudentCollectionSorter(StudentSortTypeChanger studentSortTypeChanger) {
 		this.studentSortTypeChanger = studentSortTypeChanger;
@@ -21,6 +21,7 @@ public class StudentCollectionSorter implements CollectionSorter {
 
 	@Override
 	public Collection<Object> sort(@NotNull Collection<Object> objects, SortType sortType, OrderType orderType) {
+
 		Object[] arrayObjects = objects.toArray();
 		Student[] students = new Student[objects.size()];
 

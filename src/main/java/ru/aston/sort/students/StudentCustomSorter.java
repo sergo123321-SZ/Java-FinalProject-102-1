@@ -11,12 +11,17 @@ public class StudentCustomSorter implements StudentSorter {
 		if (students == null) {
 			return;
 		}
+
+		if (Arrays.stream(students).toList().contains(null)) {
+			throw new IllegalArgumentException("Array contains null");
+		}
+
 		Student[] evenValue = new Student[students.length];
 
 		int k = 0;
-		for (int i = 0; i < students.length; i++) {
-			if (students[i].getAverageGrade() % 2 == 0) {
-				evenValue[k] = students[i];
+		for (Student student : students) {
+			if (student.getAverageGrade() % 2 == 0) {
+				evenValue[k] = student;
 				k++;
 			}
 		}

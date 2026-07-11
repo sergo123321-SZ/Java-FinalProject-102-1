@@ -1,10 +1,9 @@
 package ru.aston.jsonrw.readers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Student;
@@ -12,8 +11,8 @@ import ru.aston.model.Student;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 public class StudentJsonReader {
 	private final ObjectMapper objectMapper;

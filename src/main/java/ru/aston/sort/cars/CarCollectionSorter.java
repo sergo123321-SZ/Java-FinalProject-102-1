@@ -2,9 +2,9 @@ package ru.aston.sort.cars;
 
 import org.jetbrains.annotations.NotNull;
 import ru.aston.model.Car;
+import ru.aston.sort.CollectionSorter;
 import ru.aston.sort.OrderType;
 import ru.aston.sort.SortType;
-import ru.aston.sort.CollectionSorter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class CarCollectionSorter implements CollectionSorter {
 
-	private CarSortTypeChanger carSortTypeChanger;
+	private final CarSortTypeChanger carSortTypeChanger;
 
 	public CarCollectionSorter(CarSortTypeChanger carSortTypeChanger) {
 		this.carSortTypeChanger = carSortTypeChanger;

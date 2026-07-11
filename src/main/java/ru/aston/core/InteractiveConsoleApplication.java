@@ -1,12 +1,12 @@
 package ru.aston.core;
 
 
+import ru.aston.command.CommandProcessor;
+import ru.aston.command.ExecutionData;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import ru.aston.command.CommandProcessor;
-import ru.aston.command.ExecutionData;
 
 
 public class InteractiveConsoleApplication {
@@ -64,7 +64,7 @@ public class InteractiveConsoleApplication {
 			}
 
 			if (Character.isWhitespace(c) && !inSingleQuote && !inDoubleQuote) {
-				if (current.length() > 0) {
+				if (!current.isEmpty()) {
 					tokens.add(current.toString());
 					current.setLength(0);
 				}
@@ -78,7 +78,7 @@ public class InteractiveConsoleApplication {
 			current.append('\\');
 		}
 
-		if (current.length() > 0) {
+		if (!current.isEmpty()) {
 			tokens.add(current.toString());
 		}
 
