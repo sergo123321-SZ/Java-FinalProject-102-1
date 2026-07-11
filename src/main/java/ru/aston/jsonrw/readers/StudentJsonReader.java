@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.MappingIterator;
 
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Student;
@@ -42,12 +41,10 @@ public class StudentJsonReader {
 				return;
 			}
 
-			MappingIterator<Student> it = objectMapper.readValues(parser, Student.class);
-			while (it.hasNext()) {
-				Student student = it.next();
-				if (student != null) {
-					collection.add(student);
-				}
+			Collection<Student> studentsFromFile = objectMapper.readValue(parser, new TypeReference<>() {
+			});
+			if (studentsFromFile != null && !studentsFromFile.isEmpty()) {
+				collection.addAll(studentsFromFile);
 			}
 		}
 		catch (Exception e) {
