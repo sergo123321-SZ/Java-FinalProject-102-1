@@ -3,8 +3,7 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
-import ru.aston.core.AppConstants;
-import ru.aston.core.AppConstants.WriteType;
+import ru.aston.core.AppConstants.WriteMode;
 import ru.aston.randomgenerator.BarrelRandomGenerator;
 import ru.aston.randomgenerator.CarRandomGenerator;
 import ru.aston.randomgenerator.StudentRandomGenerator;
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class ModelGenerationExecutor extends BaseExecutor {
 	private int size = 0;
-	private AppConstants.WriteType generationRule;
+	private WriteMode generationRule;
 
 	ModelGenerationExecutor() {
 		super(List.of(CommandProcessor.CommandStep.CREATE));
@@ -56,7 +55,7 @@ public class ModelGenerationExecutor extends BaseExecutor {
 			// String generationRuleValue =
 			// commandLine.getOptionValue(CommandProcessor.CommandStep.GENERATION_RULE.shortOpt);
 			// generationRule = AppConstants.WriteType.valueOf(generationRuleValue);
-			generationRule = WriteType.OVERWRITE;
+			generationRule = WriteMode.OVERWRITE;
 		}
 		catch (Exception e) {
 			lastError = "'generationRule' option is invalid";
