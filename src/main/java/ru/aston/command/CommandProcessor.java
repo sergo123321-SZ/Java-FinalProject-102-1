@@ -111,7 +111,7 @@ public class CommandProcessor {
 		EXIT("Q", "exit", false),
 		HELP("H", "help", false),
 		MODEL("M", "model", true),
-		RESET("R", "reset", false),
+		RESET("R", "reset", false, List.of(MODEL)),
 		LENGTH("L", "length", false, List.of(MODEL)),
 		DISPLAY("D", "display", false, List.of(MODEL)),
 		SORT("S", "sort", true, List.of(MODEL)),
