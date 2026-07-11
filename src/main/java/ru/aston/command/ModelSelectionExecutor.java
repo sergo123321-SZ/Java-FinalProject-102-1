@@ -5,7 +5,6 @@ import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
 import ru.aston.core.AppConstants;
 
-import java.util.Locale;
 import java.util.List;
 
 public class ModelSelectionExecutor extends BaseExecutor {
