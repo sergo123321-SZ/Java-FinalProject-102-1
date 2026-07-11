@@ -7,6 +7,7 @@ import java.time.Year;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CarTest {
 
@@ -29,10 +30,9 @@ class CarTest {
 
 	@Test
 	@DisplayName("equals: должен возвращать false при сравнении с null")
-	void equals_comparedWithNull_returnsFalse() {
+	void equalsWithNull() {
 		Car car = Car.builder().setPower(150).setModel("Honda Civic").setProductionYear(2022).build();
-
-		assertThat(car).as("Машина не должна быть равной null").isNotNull();
+		assertFalse(car.equals(null));
 	}
 
 	@Test
@@ -171,8 +171,12 @@ class CarTest {
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом названии модели")
-	void validation_modelIsBlank_throwsIllegalArgumentException() {
+	void validation_emptyFields_throwsIllegalArgumentException() {
 		assertThatThrownBy(() -> Car.builder().setPower(150).setModel("").setProductionYear(2022).build())
+				.as("Ожидалось исключение при пустом названии модели").isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("Модель автомобиля должна быть указана");
+
+		assertThatThrownBy(() -> Car.builder().setPower(150).setModel("  ").setProductionYear(2022).build())
 				.as("Ожидалось исключение при пустом названии модели").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Модель автомобиля должна быть указана");
 	}
