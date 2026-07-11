@@ -41,9 +41,6 @@ public class ModelGenerationExecutor extends BaseExecutor {
 
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
-		if (!canExecute(commandLine)) {
-			return true;
-		}
 		try {
 			String createOptionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.CREATE.shortOpt);
 			size = Integer.parseInt(createOptionValue);
