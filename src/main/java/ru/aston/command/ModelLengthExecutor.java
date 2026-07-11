@@ -1,0 +1,31 @@
+package ru.aston.command;
+
+
+import org.apache.commons.cli.CommandLine;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
+import java.util.List;
+
+public class ModelLengthExecutor extends BaseExecutor {
+	public ModelLengthExecutor() {
+		super(List.of(CommandProcessor.CommandStep.RESET));
+	}
+
+	@Override
+	void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData) {
+		Collection<?> collection = switch (executionData.modelType) {
+			case BARRELS -> executionData.barrelCollection;
+			case CARS -> executionData.carCollection;
+			case STUDENTS -> executionData.studentCollection;
+			default -> null;
+		};
+		if (collection != null) {
+			System.out.println("Collection has " + collection.size() + " elements");
+		}
+		else {
+			System.out.println("Collection isn't initialized");
+		}
+	}
+
+}
