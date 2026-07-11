@@ -46,7 +46,7 @@ public class StudentCustomSorter implements StudentSorter {
 
 		while (leftMarker <= rightMarker) {
 			if (orderType == OrderType.NATURAL_ORDER) {
-				while (evenValueTrim[leftMarker].getAverageGrade() > pivot.getAverageGrade()) {
+				while (evenValueTrim[leftMarker].getAverageGrade() < pivot.getAverageGrade()) {
 					leftMarker++;
 				}
 				while (evenValueTrim[rightMarker].getAverageGrade() > pivot.getAverageGrade()) {

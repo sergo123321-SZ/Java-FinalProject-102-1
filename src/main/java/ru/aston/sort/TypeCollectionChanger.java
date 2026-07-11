@@ -16,6 +16,9 @@ import java.util.Collection;
 public class TypeCollectionChanger {
 
 	public CollectionSorter sortCollection(@NotNull Collection<Object> objects) {
+		if (objects.isEmpty()) {
+			throw new IllegalArgumentException("Коллекция не должна быть пустой");
+		}
 		Object[] arrayObjects = objects.toArray();
 		if (arrayObjects[0] instanceof Student) {
 			return new StudentCollectionSorter(new StudentSortTypeChanger());
