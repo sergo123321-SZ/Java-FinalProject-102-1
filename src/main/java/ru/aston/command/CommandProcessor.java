@@ -14,7 +14,7 @@ public class CommandProcessor {
 	private final HelpFormatter formatter = new HelpFormatter();
 	private final Options options = new Options();
 	private final CascadedExecutor executor = new CascadedExecutor();
-	private static final String HELP_SYNTAX = "java -jar FinalJavaProject.jar";
+	private static final String HELP_SYNTAX = "--help";
 
 	public CommandProcessor() {
 		for (CommandStep step : CommandStep.values()) {
@@ -24,7 +24,8 @@ public class CommandProcessor {
 					.desc(getDescription(step))
 					.build());
 		}
-		executor.addExecutor(new ModelSelection()).addExecutor(new ModelGeneration()).addExecutor(new ModelDisplay());
+		executor.addExecutor(new ModelSelectionExecutor()).addExecutor(new ModelGenerationExecutor())
+				.addExecutor(new ModelDisplayExecutor());
 	}
 
 	public void executeCommands(String[] commands) {

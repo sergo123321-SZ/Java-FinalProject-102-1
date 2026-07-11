@@ -11,11 +11,11 @@ import ru.aston.randomgenerator.StudentRandomGenerator;
 
 import java.util.List;
 
-public class ModelGeneration extends BaseExecutor {
+public class ModelGenerationExecutor extends BaseExecutor {
 	private int size = 0;
 	private AppConstants.WriteType generationRule;
 
-	ModelGeneration() {
+	ModelGenerationExecutor() {
 		super(List.of(CommandProcessor.CommandStep.CREATE));
 	}
 
@@ -42,10 +42,6 @@ public class ModelGeneration extends BaseExecutor {
 
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
-		if (!super.checkOptions(commandLine)) {
-			return false;
-		}
-
 		try {
 			String createOptionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.CREATE.shortOpt);
 			size = Integer.parseInt(createOptionValue);

@@ -27,9 +27,9 @@ public class CascadedExecutor implements Executor {
 		ExecutionData result = new ExecutionData();
 
 		for (BaseExecutor executor : executors) {
-			/// \todo ensure, that all required options for executor provided before exec,
-			/// or add method 'soft(strict)Exec'
-			executor.doExec(options, result);
+			if (executor.canExecute(options)) {
+				executor.doExec(options, result);
+			}
 		}
 
 		return result;
