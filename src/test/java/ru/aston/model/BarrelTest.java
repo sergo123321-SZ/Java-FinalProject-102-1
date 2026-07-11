@@ -9,6 +9,8 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class BarrelTest {
 
@@ -36,10 +38,9 @@ class BarrelTest {
 
 	@Test
 	@DisplayName("equals: должен возвращать false при сравнении бочки с null")
-	void equals_comparedWithNull_returnsFalse() {
+	void equalsWithNull() {
 		Barrel barrel = Barrel.builder().setVolume(200.0).setStoredMaterial("Oil").setBarrelMaterial("Steel").build();
-
-		assertThat(barrel).as("Бочка не должна быть равна null").isNotNull();
+		assertFalse(barrel.equals(null));
 	}
 
 	@Test
@@ -196,8 +197,18 @@ class BarrelTest {
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при объеме равном Double.NaN(не число)")
-	void validation_averageGradeIsNaN_throwsIllegalArgumentException() {
+	void validation_Volume_IllegalArgumentException() {
 		assertThatThrownBy(() -> Barrel.builder().setVolume(Double.NaN).setStoredMaterial("Oil").setBarrelMaterial("Steel").build())
+				.as("Ожидалось исключение при объеме равном Double.NaN(не число)").isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
+
+		assertThatThrownBy(() -> Barrel.builder().setVolume(Double.POSITIVE_INFINITY).setStoredMaterial("Oil").setBarrelMaterial("Steel")
+				.build())
+				.as("Ожидалось исключение при объеме равном Double.NaN(не число)").isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
+
+		assertThatThrownBy(() -> Barrel.builder().setVolume(Double.NEGATIVE_INFINITY).setStoredMaterial("Oil").setBarrelMaterial("Steel")
+				.build())
 				.as("Ожидалось исключение при объеме равном Double.NaN(не число)").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Объем бочки должен быть числом строго больше 0.0 л");
 	}
@@ -212,8 +223,12 @@ class BarrelTest {
 
 	@Test
 	@DisplayName("validation: должен выбрасывать IllegalArgumentException при пустом материале бочки")
-	void validation_barrelMaterialIsBlank_throwsIllegalArgumentException() {
+	void validation_emptyFields_throwsIllegalArgumentException() {
 		assertThatThrownBy(() -> Barrel.builder().setVolume(154.3).setStoredMaterial("Oil").setBarrelMaterial("").build())
+				.as("Ожидалось исключение при пустом материале бочки").isInstanceOf(IllegalArgumentException.class)
+				.hasMessage("Материал бочки должен быть указан");
+
+		assertThatThrownBy(() -> Barrel.builder().setVolume(154.3).setStoredMaterial("Oil").setBarrelMaterial("   ").build())
 				.as("Ожидалось исключение при пустом материале бочки").isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("Материал бочки должен быть указан");
 	}

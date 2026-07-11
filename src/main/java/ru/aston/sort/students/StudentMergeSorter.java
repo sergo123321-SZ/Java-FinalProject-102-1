@@ -3,10 +3,17 @@ package ru.aston.sort.students;
 import ru.aston.model.Student;
 import ru.aston.sort.OrderType;
 
+import java.util.Arrays;
+
 public class StudentMergeSorter implements StudentSorter {
 	@Override
 	public void sortStudentsCollection(Student[] students, int leftIndex, int rightIndex, OrderType orderType) {
 		Student[] temp = new Student[students.length];
+
+		if (Arrays.stream(students).toList().contains(null)) {
+			throw new IllegalArgumentException("Array contains null");
+		}
+
 		mergeSortAsc(students, 0, students.length - 1, temp, orderType);
 	}
 

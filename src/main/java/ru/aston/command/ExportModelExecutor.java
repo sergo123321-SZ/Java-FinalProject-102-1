@@ -3,7 +3,6 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
-
 import ru.aston.core.AppConstants.WriteMode;
 import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.writers.BarrelJsonWriter;

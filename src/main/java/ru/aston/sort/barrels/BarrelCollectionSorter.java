@@ -3,9 +3,9 @@ package ru.aston.sort.barrels;
 
 import org.jetbrains.annotations.NotNull;
 import ru.aston.model.Barrel;
+import ru.aston.sort.CollectionSorter;
 import ru.aston.sort.OrderType;
 import ru.aston.sort.SortType;
-import ru.aston.sort.CollectionSorter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BarrelCollectionSorter implements CollectionSorter {
 
-	private BarrelSortTypeChanger barrelSortTypeChanger;
+	private final BarrelSortTypeChanger barrelSortTypeChanger;
 
 	public BarrelCollectionSorter(BarrelSortTypeChanger barrelSortTypeChanger) {
 		this.barrelSortTypeChanger = barrelSortTypeChanger;

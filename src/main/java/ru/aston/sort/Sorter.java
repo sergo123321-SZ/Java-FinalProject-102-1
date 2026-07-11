@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public class Sorter {
 
-	private TypeCollectionChanger typeCollectionChanger;
+	private final TypeCollectionChanger typeCollectionChanger;
 
 	public Sorter(TypeCollectionChanger typeCollectionChanger) {
 		this.typeCollectionChanger = typeCollectionChanger;

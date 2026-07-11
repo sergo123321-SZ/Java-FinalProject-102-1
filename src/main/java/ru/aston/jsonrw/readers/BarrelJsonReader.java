@@ -1,10 +1,9 @@
 package ru.aston.jsonrw.readers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Barrel;

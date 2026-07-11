@@ -3,12 +3,19 @@ package ru.aston.sort.students;
 import ru.aston.model.Student;
 import ru.aston.sort.OrderType;
 
+import java.util.Arrays;
+
 public class StudentQuickSorter implements StudentSorter {
 	@Override
 	public void sortStudentsCollection(Student[] students, int leftIndex, int rightIndex, OrderType orderType) {
 		if (leftIndex >= rightIndex) {
 			return;
 		}
+
+		if (Arrays.stream(students).toList().contains(null)) {
+			throw new IllegalArgumentException("Array contains null");
+		}
+
 		Student pivot = students[(leftIndex + rightIndex) / 2];
 		int leftMarker = leftIndex;
 		int rightMarker = rightIndex;
