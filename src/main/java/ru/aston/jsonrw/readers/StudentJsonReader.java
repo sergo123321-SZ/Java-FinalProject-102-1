@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
+import java.util.LinkedList;
 
 public class StudentJsonReader {
 	private final ObjectMapper objectMapper;
@@ -20,6 +21,18 @@ public class StudentJsonReader {
 		this.objectMapper = new ObjectMapper();
 		this.objectMapper.addMixIn(Student.class, MixinUtils.StudentMixIn.class);
 		this.objectMapper.addMixIn(Student.Builder.class, MixinUtils.StudentBuilderMixIn.class);
+	}
+
+	public void readStudentsFromFile(Collection<Student> collection, final String filePath, boolean append) {
+		if (append) {
+			if (collection == null) {
+				collection = new LinkedList<>();
+			}
+			addStudentsToCollection(collection, filePath);
+		}
+		else {
+			collection = readStudentsFromFile(filePath);
+		}
 	}
 
 	public void addStudentsToCollection(final Collection<Student> collection, final String filePath) {
