@@ -87,6 +87,10 @@ public class TranslationManager {
 		return getString("option.create.description", requiredSteps);
 	}
 
+	public static String getManualOptionDescription(String requiredSteps) {
+		return getString("option.manual.description", requiredSteps);
+	}
+
 	public static String getSortOptionDescription(
 			String ascVariantName,
 			String descVariantName,
@@ -170,6 +174,10 @@ public class TranslationManager {
 
 	public static String getCreateOptionInvalidValueError() {
 		return getString("error.option.create.invalid-value");
+	}
+
+	public static String getManualOptionInvalidValueError() {
+		return getString("error.option.manual.invalid-value");
 	}
 
 	public static String getSortOptionRequiredError() {
@@ -346,5 +354,73 @@ public class TranslationManager {
 
 	public static String getUnknownDataTypeError() {
 		return getString("error.data-type.unknown");
+	}
+
+	public static String getScannerNotAvailableError() {
+		return getString("error.console.scanner.unavailable");
+	}
+
+	public static String getScannerInputEndedError() {
+		return getString("error.console.input.ended");
+	}
+
+	public static String getManualInputMustNotBeBlankError() {
+		return getString("error.manual.input.blank");
+	}
+
+	public static String getManualInputMustBeIntegerError() {
+		return getString("error.manual.input.integer");
+	}
+
+	public static String getManualInputMustBeNumberError() {
+		return getString("error.manual.input.number");
+	}
+
+	public static String getManualCarInputPrompt(int index) {
+		return getString("output.manual.car.header", index);
+	}
+
+	public static String getManualStudentInputPrompt(int index) {
+		return getString("output.manual.student.header", index);
+	}
+
+	public static String getManualBarrelInputPrompt(int index) {
+		return getString("output.manual.barrel.header", index);
+	}
+
+	public static String getManualPromptCarModel() {
+		return getString("output.manual.prompt.car.model");
+	}
+
+	public static String getManualPromptCarPower() {
+		return getString("output.manual.prompt.car.power");
+	}
+
+	public static String getManualPromptCarProductionYear() {
+		return getString("output.manual.prompt.car.production-year");
+	}
+
+	public static String getManualPromptStudentGroupNumber() {
+		return getString("output.manual.prompt.student.group-number");
+	}
+
+	public static String getManualPromptStudentAverageGrade() {
+		return getString("output.manual.prompt.student.average-grade");
+	}
+
+	public static String getManualPromptStudentRecordBook() {
+		return getString("output.manual.prompt.student.record-book");
+	}
+
+	public static String getManualPromptBarrelVolume() {
+		return getString("output.manual.prompt.barrel.volume");
+	}
+
+	public static String getManualPromptBarrelStoredMaterial() {
+		return getString("output.manual.prompt.barrel.stored-material");
+	}
+
+	public static String getManualPromptBarrelMaterial() {
+		return getString("output.manual.prompt.barrel.material");
 	}
 }
