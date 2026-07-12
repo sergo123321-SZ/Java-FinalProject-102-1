@@ -3,6 +3,7 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 import ru.aston.randomgenerator.BarrelRandomGenerator;
 import ru.aston.randomgenerator.CarRandomGenerator;
 import ru.aston.randomgenerator.StudentRandomGenerator;
@@ -19,7 +20,7 @@ public class ModelGenerationExecutor extends BaseExecutor {
 	@Override
 	void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData) {
 		if (executionData.modelType == null) {
-			throw new IllegalArgumentException("'modelType' is null. MUST be assigned before execution!");
+			throw new IllegalArgumentException(TranslationManager.getNullModelTypeError());
 		}
 
 		switch (executionData.modelType) {
@@ -33,7 +34,7 @@ public class ModelGenerationExecutor extends BaseExecutor {
 				executionData.barrelCollection = BarrelRandomGenerator.generate(size);
 				break;
 			default:
-				throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
+				throw new IllegalArgumentException(TranslationManager.getUnknownModelTypeError());
 		}
 	}
 
@@ -44,7 +45,7 @@ public class ModelGenerationExecutor extends BaseExecutor {
 			size = Integer.parseInt(createOptionValue);
 		}
 		catch (Exception e) {
-			lastError = "'create' option must be a positive integer";
+			lastError = TranslationManager.getCreateOptionInvalidValueError();
 			return false;
 		}
 

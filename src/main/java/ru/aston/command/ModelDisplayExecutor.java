@@ -3,6 +3,7 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,13 +21,13 @@ public class ModelDisplayExecutor extends BaseExecutor {
 			case BARRELS -> executionData.barrelCollection;
 			case CARS -> executionData.carCollection;
 			case STUDENTS -> executionData.studentCollection;
-			default -> throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
+			default -> throw new IllegalArgumentException(TranslationManager.getUnknownModelTypeError());
 		};
 		if (collection != null && !collection.isEmpty()) {
 			collection.forEach(System.out::println);
 		}
 		else {
-			System.out.println("Nothing to display. The collection is empty.");
+			System.out.println(TranslationManager.getEmptyDisplayCollectionMessage());
 		}
 	}
 }

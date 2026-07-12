@@ -2,6 +2,7 @@ package ru.aston.jsonrw.writers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Barrel;
 
@@ -37,10 +38,10 @@ public class BarrelJsonWriter {
 		try {
 			final Path path = Path.of(filePath);
 			objectMapper.writerWithDefaultPrettyPrinter().writeValue(path.toFile(), barrels);
-			System.out.println("Бочки успешно записаны в файл: " + filePath);
+			System.out.println(TranslationManager.getWriteBarrelsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при записи бочек в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getWriteBarrelsError(e.getMessage()));
 		}
 	}
 
@@ -64,10 +65,10 @@ public class BarrelJsonWriter {
 					.toList();
 
 			writeBarrelsToFile(merged, filePath);
-			System.out.println("Бочки успешно добавлены в файл: " + filePath);
+			System.out.println(TranslationManager.getAppendBarrelsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при добавлении бочек в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getAppendBarrelsError(e.getMessage()));
 		}
 	}
 }

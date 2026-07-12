@@ -5,6 +5,7 @@ import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
 
 import ru.aston.core.AppConstants.WriteMode;
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.readers.BarrelJsonReader;
 import ru.aston.jsonrw.readers.CarJsonReader;
 import ru.aston.jsonrw.readers.StudentJsonReader;
@@ -39,7 +40,7 @@ public class ImportModelExecutor extends BaseExecutor {
 				new StudentJsonReader().readStudentsFromFile(executionData.studentCollection, filePath, doAppend);
 				break;
 			default:
-				throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
+				throw new IllegalArgumentException(TranslationManager.getUnknownModelTypeError());
 		}
 
 	}
@@ -48,11 +49,11 @@ public class ImportModelExecutor extends BaseExecutor {
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		String optionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.IMPORT.shortOpt);
 		if (optionValue == null) {
-			throw new IllegalArgumentException("Import option value is required");
+			throw new IllegalArgumentException(TranslationManager.getImportOptionValueRequiredError());
 		}
 
 		if (!Files.exists(Path.of(optionValue)) || !Files.isRegularFile(Path.of(optionValue))) {
-			throw new IllegalArgumentException("Import option must be a valid file path");
+			throw new IllegalArgumentException(TranslationManager.getImportOptionInvalidPathError());
 		}
 
 		return true;

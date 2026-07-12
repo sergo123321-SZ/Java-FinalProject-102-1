@@ -4,11 +4,10 @@ package ru.aston.command;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.*;
 
-
-/// \todo translate all strings
 abstract class BaseExecutor implements Executor {
 	protected List<CommandProcessor.CommandStep> requiredSteps;
 	protected String lastError = null;
@@ -18,7 +17,7 @@ abstract class BaseExecutor implements Executor {
 
 		boolean hasAllRequiredOptions = requiredSteps.stream().map(s -> s.shortOpt).allMatch(commandLine::hasOption);
 		if (!hasAllRequiredOptions) {
-			lastError = "Missing required options. Please ensure the following options are provided: " + getOptionsDisplay(requiredSteps);
+			lastError = TranslationManager.getMissingRequiredOptionsError(getOptionsDisplay(requiredSteps));
 			return false;
 		}
 
@@ -69,7 +68,7 @@ abstract class BaseExecutor implements Executor {
 			}
 		}
 		if (step == null) {
-			lastError = "Unknown option: " + option.getLongOpt();
+			lastError = TranslationManager.getUnknownOptionError(option.getLongOpt());
 			return false;
 		}
 

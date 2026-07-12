@@ -3,6 +3,7 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,10 +22,10 @@ public class ModelLengthExecutor extends BaseExecutor {
 			default -> null;
 		};
 		if (collection != null) {
-			System.out.println("Collection has " + collection.size() + " elements");
+			System.out.println(TranslationManager.getCollectionLengthMessage(collection.size()));
 		}
 		else {
-			System.out.println("Collection isn't initialized");
+			System.out.println(TranslationManager.getCollectionNotInitializedMessage());
 		}
 	}
 

@@ -1,6 +1,7 @@
 package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.time.Year;
 import java.util.Objects;
@@ -16,13 +17,13 @@ public class Car implements Comparable<Car> {
 
 	public Car(final int power, @NotNull final String model, final int productionYear) {
 		if (power <= 0) {
-			throw new IllegalArgumentException("Мощность автомобиля должна быть строго больше 0 л.с.");
+			throw new IllegalArgumentException(TranslationManager.getCarPowerValidationError());
 		}
 		if (model.isBlank()) {
-			throw new IllegalArgumentException("Модель автомобиля должна быть указана");
+			throw new IllegalArgumentException(TranslationManager.getCarModelValidationError());
 		}
 		if (productionYear < 1886 || productionYear > Year.now().getValue()) {
-			throw new IllegalArgumentException("Год производства должен быть в диапазоне от 1886 до текущего года");
+			throw new IllegalArgumentException(TranslationManager.getCarProductionYearValidationError());
 		}
 
 		this.power = power;
@@ -48,7 +49,7 @@ public class Car implements Comparable<Car> {
 
 	@Override
 	public String toString() {
-		return String.format("Автомобиль [Модель: %s, Мощность: %d л.с., Год: %d]", model, power, productionYear);
+		return TranslationManager.getCarDisplayText(model, power, productionYear);
 	}
 
 	@Override

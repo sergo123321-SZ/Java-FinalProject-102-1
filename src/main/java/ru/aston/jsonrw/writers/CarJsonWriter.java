@@ -2,6 +2,7 @@ package ru.aston.jsonrw.writers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Car;
 
@@ -37,10 +38,10 @@ public class CarJsonWriter {
 		try {
 			final Path path = Path.of(filePath);
 			objectMapper.writerWithDefaultPrettyPrinter().writeValue(path.toFile(), cars);
-			System.out.println("Машины успешно записаны в файл: " + filePath);
+			System.out.println(TranslationManager.getWriteCarsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при записи машин в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getWriteCarsError(e.getMessage()));
 		}
 	}
 
@@ -63,10 +64,10 @@ public class CarJsonWriter {
 			List<Car> merged = Stream.concat(Optional.ofNullable(existing).stream().flatMap(Collection::stream), cars.stream()).toList();
 
 			writeCarsToFile(merged, filePath);
-			System.out.println("Машины успешно добавлены в файл: " + filePath);
+			System.out.println(TranslationManager.getAppendCarsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при добавлении машин в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getAppendCarsError(e.getMessage()));
 		}
 	}
 }

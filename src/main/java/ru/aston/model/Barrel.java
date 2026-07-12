@@ -1,6 +1,7 @@
 package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.Objects;
 
@@ -15,13 +16,13 @@ public class Barrel implements Comparable<Barrel> {
 
 	public Barrel(final double volume, @NotNull final String storedMaterial, @NotNull final String barrelMaterial) {
 		if (Double.isNaN(volume) || Double.isInfinite(volume) || volume <= 0.0) {
-			throw new IllegalArgumentException("Объем бочки должен быть числом строго больше 0.0 л");
+			throw new IllegalArgumentException(TranslationManager.getBarrelVolumeValidationError());
 		}
 		if (storedMaterial.isBlank()) {
-			throw new IllegalArgumentException("Хранимый материал должен быть указан");
+			throw new IllegalArgumentException(TranslationManager.getBarrelStoredMaterialValidationError());
 		}
 		if (barrelMaterial.isBlank()) {
-			throw new IllegalArgumentException("Материал бочки должен быть указан");
+			throw new IllegalArgumentException(TranslationManager.getBarrelMaterialValidationError());
 		}
 
 		this.volume = volume;
@@ -47,7 +48,7 @@ public class Barrel implements Comparable<Barrel> {
 
 	@Override
 	public String toString() {
-		return String.format("Бочка [Объем: %.1f л, Содержимое: %s, Материал бочки: %s]", volume, storedMaterial, barrelMaterial);
+		return TranslationManager.getBarrelDisplayText(volume, storedMaterial, barrelMaterial);
 	}
 
 	@Override

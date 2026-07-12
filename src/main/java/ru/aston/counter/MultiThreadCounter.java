@@ -1,6 +1,7 @@
 package ru.aston.counter;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +20,7 @@ public class MultiThreadCounter {
 			throws ExecutionException, InterruptedException
 	{
 		if (threadsCount <= 0) {
-			throw new IllegalArgumentException("Threads count must be greater than 0");
+			throw new IllegalArgumentException(TranslationManager.getThreadsCountMustBePositiveError());
 		}
 
 		List<Callable<Integer>> tasks = new ArrayList<>();
@@ -61,7 +62,7 @@ public class MultiThreadCounter {
 			throws ExecutionException, InterruptedException
 	{
 		if (threadsCount <= 0) {
-			throw new IllegalArgumentException("Threads count must be greater than 0");
+			throw new IllegalArgumentException(TranslationManager.getThreadsCountMustBePositiveError());
 		}
 
 		Long totalCount = 0L;
