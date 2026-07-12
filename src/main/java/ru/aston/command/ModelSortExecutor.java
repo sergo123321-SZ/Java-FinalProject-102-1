@@ -5,6 +5,7 @@ import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
 
 import ru.aston.core.AppConstants;
+import ru.aston.core.TranslationManager;
 import ru.aston.model.Barrel;
 import ru.aston.model.Car;
 import ru.aston.model.Student;
@@ -26,7 +27,7 @@ public class ModelSortExecutor extends BaseExecutor {
 	@Override
 	void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData) {
 		if (executionData.modelType == null) {
-			throw new IllegalArgumentException("'modelType' is null. MUST be assigned before execution!");
+			throw new IllegalArgumentException(TranslationManager.getNullModelTypeError());
 		}
 
 		String sortOptionValue = options.getOptionValue(CommandProcessor.CommandStep.SORT.shortOpt);
@@ -48,11 +49,11 @@ public class ModelSortExecutor extends BaseExecutor {
 				case BARRELS -> executionData.barrelCollection = castCollection(sortedCollection, Barrel.class);
 				case CARS -> executionData.carCollection = castCollection(sortedCollection, Car.class);
 				case STUDENTS -> executionData.studentCollection = castCollection(sortedCollection, Student.class);
-				default -> throw new IllegalArgumentException("'modelType' is unknown. MUST be assigned before execution!");
+				default -> throw new IllegalArgumentException(TranslationManager.getUnknownModelTypeError());
 			}
 		}
 		else {
-			System.out.println("Nothing to sort. The collection is empty.");
+			System.out.println(TranslationManager.getEmptySortCollectionMessage());
 		}
 	}
 
@@ -61,13 +62,13 @@ public class ModelSortExecutor extends BaseExecutor {
 		try {
 			String sortOptionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.SORT.shortOpt);
 			if (sortOptionValue == null || sortOptionValue.isBlank()) {
-				lastError = "'sort' option is required and must be non-empty";
+				lastError = TranslationManager.getSortOptionRequiredError();
 				return false;
 			}
 			getSortType(sortOptionValue);
 		}
 		catch (IllegalArgumentException e) {
-			lastError = "Unsupported sort type. Allowed values: ASC, DESC, SPECIAL";
+			lastError = TranslationManager.getSortOptionUnsupportedError();
 			return false;
 		}
 

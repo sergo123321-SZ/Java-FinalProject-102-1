@@ -4,6 +4,7 @@ package ru.aston.command;
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
 import ru.aston.core.AppConstants;
+import ru.aston.core.TranslationManager;
 
 import java.util.List;
 
@@ -16,15 +17,14 @@ public class ModelSelectionExecutor extends BaseExecutor {
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		String selectedModelId = commandLine.getOptionValue(CommandProcessor.CommandStep.MODEL.shortOpt);
 		if (selectedModelId == null) {
-			throw new IllegalStateException("model id is required");
+			throw new IllegalStateException(TranslationManager.getModelIdRequiredError());
 		}
 
 		try {
 			parseModelType(selectedModelId);
 		}
 		catch (IllegalArgumentException e) {
-			/// \todo use the correct string
-			lastError = e.getMessage();
+			lastError = TranslationManager.getModelUnsupportedError();
 			return false;
 		}
 

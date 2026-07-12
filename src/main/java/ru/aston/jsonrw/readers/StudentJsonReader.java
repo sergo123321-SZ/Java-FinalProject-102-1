@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Student;
 
@@ -42,7 +43,7 @@ public class StudentJsonReader {
 
 		final Path path = Path.of(filePath);
 		if (!Files.exists(path) || !Files.isRegularFile(path)) {
-			System.err.printf("Не удалось найти файл со студентами '%s'%n", filePath);
+			System.err.println(TranslationManager.getStudentsFileNotFoundError(filePath));
 			return;
 		}
 
@@ -50,7 +51,7 @@ public class StudentJsonReader {
 			JsonToken currentToken = parser.nextToken();
 
 			if (currentToken != JsonToken.START_ARRAY) {
-				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				System.err.println(TranslationManager.getJsonArrayExpectedError());
 				return;
 			}
 
@@ -61,7 +62,7 @@ public class StudentJsonReader {
 			}
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при чтении JSON файла со студентами: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getReadStudentsJsonError(e.getMessage()));
 		}
 	}
 
@@ -72,7 +73,7 @@ public class StudentJsonReader {
 
 		final Path path = Path.of(filePath);
 		if (!Files.exists(path) || !Files.isRegularFile(path)) {
-			System.err.printf("Не удалось найти файл со студентами '%s'%n", filePath);
+			System.err.println(TranslationManager.getStudentsFileNotFoundError(filePath));
 			return List.of();
 		}
 
@@ -80,7 +81,7 @@ public class StudentJsonReader {
 			JsonToken currentToken = parser.nextToken();
 
 			if (currentToken != JsonToken.START_ARRAY) {
-				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				System.err.println(TranslationManager.getJsonArrayExpectedError());
 				return List.of();
 			}
 
@@ -89,7 +90,7 @@ public class StudentJsonReader {
 			return (students != null) ? students : List.of();
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при чтении JSON файла со студентами: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getReadStudentsJsonError(e.getMessage()));
 			return List.of();
 		}
 	}

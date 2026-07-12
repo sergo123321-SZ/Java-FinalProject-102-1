@@ -2,6 +2,7 @@ package ru.aston.jsonrw.writers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Student;
 
@@ -37,10 +38,10 @@ public class StudentJsonWriter {
 		try {
 			final Path path = Path.of(filePath);
 			objectMapper.writerWithDefaultPrettyPrinter().writeValue(path.toFile(), students);
-			System.out.println("Студенты успешно записаны в файл: " + filePath);
+			System.out.println(TranslationManager.getWriteStudentsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при записи студентов в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getWriteStudentsError(e.getMessage()));
 		}
 	}
 
@@ -64,10 +65,10 @@ public class StudentJsonWriter {
 					.toList();
 
 			writeStudentsToFile(merged, filePath);
-			System.out.println("Студенты успешно добавлены в файл: " + filePath);
+			System.out.println(TranslationManager.getAppendStudentsSuccessMessage(filePath));
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при добавлении студентов в файл: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getAppendStudentsError(e.getMessage()));
 		}
 	}
 }

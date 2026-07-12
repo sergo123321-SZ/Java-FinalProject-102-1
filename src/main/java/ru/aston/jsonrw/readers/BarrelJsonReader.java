@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
+import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.MixinUtils;
 import ru.aston.model.Barrel;
 
@@ -42,7 +43,7 @@ public class BarrelJsonReader {
 
 		final Path path = Path.of(filePath);
 		if (!Files.exists(path) || !Files.isRegularFile(path)) {
-			System.err.printf("Не удалось найти файл с бочками '%s'%n", filePath);
+			System.err.println(TranslationManager.getBarrelsFileNotFoundError(filePath));
 			return;
 		}
 
@@ -50,7 +51,7 @@ public class BarrelJsonReader {
 			JsonToken currentToken = parser.nextToken();
 
 			if (currentToken != JsonToken.START_ARRAY) {
-				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				System.err.println(TranslationManager.getJsonArrayExpectedError());
 				return;
 			}
 
@@ -61,7 +62,7 @@ public class BarrelJsonReader {
 			}
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при чтении JSON файла с бочками: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getReadBarrelsJsonError(e.getMessage()));
 		}
 	}
 
@@ -72,14 +73,14 @@ public class BarrelJsonReader {
 
 		final Path path = Path.of(filePath);
 		if (!Files.exists(path) || !Files.isRegularFile(path)) {
-			System.err.printf("Не удалось найти файл с бочками '%s'%n", filePath);
+			System.err.println(TranslationManager.getBarrelsFileNotFoundError(filePath));
 			return List.of();
 		}
 
 		try (JsonParser parser = objectMapper.getFactory().createParser(path.toFile())) {
 			JsonToken currentToken = parser.nextToken();
 			if (currentToken != JsonToken.START_ARRAY) {
-				System.err.println("Ошибка: JSON должен начинаться с массива объектов");
+				System.err.println(TranslationManager.getJsonArrayExpectedError());
 				return List.of();
 			}
 
@@ -88,7 +89,7 @@ public class BarrelJsonReader {
 			return (barrels != null) ? barrels : List.of();
 		}
 		catch (Exception e) {
-			System.err.printf("Ошибка при чтении JSON файла с бочками: '%s'%n", e.getMessage());
+			System.err.println(TranslationManager.getReadBarrelsJsonError(e.getMessage()));
 			return List.of();
 		}
 	}

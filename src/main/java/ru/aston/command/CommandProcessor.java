@@ -9,7 +9,6 @@ import ru.aston.core.TranslationManager;
 import java.util.List;
 import java.util.Locale;
 
-/// \todo translate all strings
 public class CommandProcessor {
 	private final CommandLineParser parser = new DefaultParser();
 	private final HelpFormatter formatter = new HelpFormatter();
@@ -50,14 +49,14 @@ public class CommandProcessor {
 				});
 			}
 			if (!executor.checkOptions(cmd)) {
-				System.out.println("Ошибка валидации: " + executor.getLastError());
+				System.out.println(TranslationManager.getValidationError(executor.getLastError()));
 				formatter.printHelp(HELP_SYNTAX, options);
 				return;
 			}
 			executor.execute(cmd, executionData);
 		}
 		catch (ParseException e) {
-			System.out.println("Ошибка парсинга: " + e.getMessage());
+			System.out.println(TranslationManager.getParsingError(e.getMessage()));
 			formatter.printHelp(HELP_SYNTAX, options);
 		}
 	}
@@ -97,14 +96,14 @@ public class CommandProcessor {
 					AppConstants.WriteMode.APPEND.getValue(),
 					AppConstants.WriteMode.OVERWRITE.getValue()
 			);
-			default -> throw new IllegalArgumentException("Unknown command step: " + step);
+			default -> throw new IllegalArgumentException(TranslationManager.getUnknownCommandStepError(step.name()));
 		};
 	}
 	// @formatter:on
 
 	private @NotNull String getAcceptableOptionsString(@NotNull CommandStep step) {
 		if (step.acceptableVariants.isEmpty()) {
-			throw new IllegalArgumentException("No acceptable options for step: " + step);
+			throw new IllegalArgumentException(TranslationManager.getNoAcceptableOptionsError(step.name()));
 		}
 
 		return String.join(" | ", step.acceptableVariants);

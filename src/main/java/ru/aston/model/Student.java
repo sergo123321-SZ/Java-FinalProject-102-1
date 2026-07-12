@@ -1,6 +1,7 @@
 package ru.aston.model;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.Objects;
 
@@ -19,13 +20,13 @@ public class Student implements Comparable<Student> {
 			@NotNull final String recordBookNumber)
 	{
 		if (groupNumber.isBlank()) {
-			throw new IllegalArgumentException("Номер группы должен быть указан");
+			throw new IllegalArgumentException(TranslationManager.getStudentGroupNumberValidationError());
 		}
 		if (Double.isNaN(averageGrade) || Double.isInfinite(averageGrade) || averageGrade < 0.0 || averageGrade > 5.0) {
-			throw new IllegalArgumentException("Средний балл должен быть числом в диапазоне от 0.0 до 5.0");
+			throw new IllegalArgumentException(TranslationManager.getStudentAverageGradeValidationError());
 		}
 		if (recordBookNumber.isBlank()) {
-			throw new IllegalArgumentException("Номер зачетной книжки должен быть указан");
+			throw new IllegalArgumentException(TranslationManager.getStudentRecordBookValidationError());
 		}
 
 		this.groupNumber = groupNumber;
@@ -70,8 +71,7 @@ public class Student implements Comparable<Student> {
 
 	@Override
 	public String toString() {
-		return String
-				.format("Студент [Группа: %s, Средний балл: %.2f, Номер зачетной книжки: %s]", groupNumber, averageGrade, recordBookNumber);
+		return TranslationManager.getStudentDisplayText(groupNumber, averageGrade, recordBookNumber);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package ru.aston.sort;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 import ru.aston.model.Barrel;
 import ru.aston.model.Car;
 import ru.aston.model.Student;
@@ -17,7 +18,7 @@ public class TypeCollectionChanger {
 
 	public CollectionSorter sortCollection(@NotNull Collection<Object> objects) {
 		if (objects.isEmpty()) {
-			throw new IllegalArgumentException("Коллекция не должна быть пустой");
+			throw new IllegalArgumentException(TranslationManager.getCollectionMustNotBeEmptyError());
 		}
 		Object[] arrayObjects = objects.toArray();
 		if (arrayObjects[0] instanceof Student) {
@@ -30,7 +31,7 @@ public class TypeCollectionChanger {
 			return new BarrelCollectionSorter(new BarrelSortTypeChanger());
 		}
 		else {
-			throw new IllegalArgumentException("Неизвестный тип данных");
+			throw new IllegalArgumentException(TranslationManager.getUnknownDataTypeError());
 		}
 	}
 }

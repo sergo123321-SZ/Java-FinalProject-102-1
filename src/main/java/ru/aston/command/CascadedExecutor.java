@@ -3,6 +3,7 @@ package ru.aston.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
+import ru.aston.core.TranslationManager;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class CascadedExecutor implements Executor {
 
 	public CascadedExecutor addExecutor(@NotNull final Executor executor) {
 		if (!(executor instanceof BaseExecutor e)) {
-			throw new IllegalArgumentException("Only package BaseExecutors supported");
+			throw new IllegalArgumentException(TranslationManager.getUnsupportedExecutorError());
 		}
 
 		executors.add(e);
@@ -59,7 +60,7 @@ public class CascadedExecutor implements Executor {
 
 	private void checkState() {
 		if (executors.isEmpty()) {
-			throw new IllegalStateException("No executors defined");
+			throw new IllegalStateException(TranslationManager.getNoExecutorsDefinedError());
 		}
 	}
 }
