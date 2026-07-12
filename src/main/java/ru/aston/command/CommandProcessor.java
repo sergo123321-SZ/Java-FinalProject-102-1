@@ -67,7 +67,7 @@ public class CommandProcessor {
 	private String getDescription(@NotNull CommandStep step) {
 		return switch (step) {
 			case EXIT -> TranslationManager.getExitOptionDescription();
-			case HELP -> TranslationManager.getHelpText("1.0", "TeamName");
+			case HELP -> TranslationManager.getHelpText();
 			case LANGUAGE -> TranslationManager.getLanguageOptionDescription();
 			case MODEL -> TranslationManager.getModelOptionDescription(getAcceptableOptionsString(step));
 			case RESET -> TranslationManager.getResetOptionDescription(
