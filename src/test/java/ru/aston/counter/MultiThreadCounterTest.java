@@ -2,8 +2,10 @@ package ru.aston.counter;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.aston.core.TranslationManager;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ class MultiThreadCounterTest {
 
 	@BeforeAll
 	static void setUp() {
+		TranslationManager.setLocale(Locale.of("ru"));
 		AtomicInteger counter = new AtomicInteger(0);
 		primitives = Stream.generate(counter::getAndIncrement)
 				.limit(10_000_000)

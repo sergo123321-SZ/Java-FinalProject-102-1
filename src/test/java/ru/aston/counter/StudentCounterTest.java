@@ -3,9 +3,11 @@ package ru.aston.counter;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.aston.core.TranslationManager;
 import ru.aston.model.Student;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -22,6 +24,7 @@ public class StudentCounterTest {
 
 	@BeforeAll
 	static void setUp() {
+		TranslationManager.setLocale(Locale.of("ru"));
 		Random random = new Random();
 		students = Stream.generate(() -> Student.builder()
 				.setGroupNumber(RandomStringUtils.insecure().nextNumeric(10))

@@ -1,14 +1,22 @@
 package ru.aston.model;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.aston.core.TranslationManager;
 
 import java.time.Year;
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CarTest {
+
+	@BeforeAll
+	static void setUp() {
+		TranslationManager.setLocale(Locale.of("ru"));
+	}
 
 	@Test
 	@DisplayName("equals: должен возвращать true при сравнении машины с самой собой")
