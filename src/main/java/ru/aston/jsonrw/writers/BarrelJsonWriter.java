@@ -21,6 +21,15 @@ public class BarrelJsonWriter {
 		this.objectMapper.addMixIn(Barrel.Builder.class, MixinUtils.BarrelBuilderMixIn.class);
 	}
 
+	public void writeBarrelsToFile(final Collection<Barrel> barrels, final String filePath, boolean append) {
+		if (append) {
+			appendBarrelsToFile(barrels, filePath);
+		}
+		else {
+			writeBarrelsToFile(barrels, filePath);
+		}
+	}
+
 	public void writeBarrelsToFile(final Collection<Barrel> barrels, final String filePath) {
 		if (barrels == null || filePath == null || filePath.isBlank()) {
 			return;

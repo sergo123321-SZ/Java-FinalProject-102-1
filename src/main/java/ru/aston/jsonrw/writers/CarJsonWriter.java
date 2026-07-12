@@ -21,6 +21,15 @@ public class CarJsonWriter {
 		this.objectMapper.addMixIn(Car.Builder.class, MixinUtils.CarBuilderMixIn.class);
 	}
 
+	public void writeCarsToFile(final Collection<Car> cars, final String filePath, boolean append) {
+		if (append) {
+			appendCarsToFile(cars, filePath);
+		}
+		else {
+			writeCarsToFile(cars, filePath);
+		}
+	}
+
 	public void writeCarsToFile(final Collection<Car> cars, final String filePath) {
 		if (cars == null || filePath == null || filePath.isBlank()) {
 			return;
