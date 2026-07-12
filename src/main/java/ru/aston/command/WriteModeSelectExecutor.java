@@ -16,13 +16,14 @@ public class WriteModeSelectExecutor extends BaseExecutor {
 
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
-		String selectedModelId = commandLine.getOptionValue(CommandProcessor.CommandStep.WRITE_MODE.shortOpt);
-		if (selectedModelId == null) {
-			throw new IllegalStateException(TranslationManager.getModelIdRequiredError());
+		String selectedWriteMode = commandLine.getOptionValue(CommandProcessor.CommandStep.WRITE_MODE.shortOpt);
+		if (selectedWriteMode == null || selectedWriteMode.isBlank()) {
+			lastError = TranslationManager.getWriteModeUnsupportedError();
+			return false;
 		}
 
 		try {
-			AppConstants.WriteMode.valueOf(selectedModelId.trim().toUpperCase());
+			parseWriteMode(selectedWriteMode);
 		}
 		catch (IllegalArgumentException e) {
 			lastError = TranslationManager.getWriteModeUnsupportedError();
@@ -34,8 +35,19 @@ public class WriteModeSelectExecutor extends BaseExecutor {
 
 	@Override
 	void doExec(@NotNull CommandLine options, @NotNull ExecutionData executionData) {
-		String selectedModelId = options.getOptionValue(CommandProcessor.CommandStep.WRITE_MODE.shortOpt);
-		executionData.writeMode = AppConstants.WriteMode.valueOf(selectedModelId.trim().toUpperCase());
+		String selectedWriteMode = options.getOptionValue(CommandProcessor.CommandStep.WRITE_MODE.shortOpt);
+		executionData.writeMode = parseWriteMode(selectedWriteMode);
+	}
+
+	private @NotNull AppConstants.WriteMode parseWriteMode(@NotNull String writeModeId) {
+		String normalized = writeModeId.trim().toUpperCase();
+		normalized = switch (normalized) {
+			case "A" -> AppConstants.WriteMode.APPEND.name();
+			case "W" -> AppConstants.WriteMode.OVERWRITE.name();
+			default -> normalized;
+		};
+
+		return AppConstants.WriteMode.valueOf(normalized);
 	}
 
 }

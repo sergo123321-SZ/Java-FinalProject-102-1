@@ -9,9 +9,14 @@ import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.readers.BarrelJsonReader;
 import ru.aston.jsonrw.readers.CarJsonReader;
 import ru.aston.jsonrw.readers.StudentJsonReader;
+import ru.aston.model.Barrel;
+import ru.aston.model.Car;
+import ru.aston.model.Student;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -28,16 +33,31 @@ public class ImportModelExecutor extends BaseExecutor {
 
 		switch (executionData.modelType) {
 			case BARRELS:
-				assert executionData.barrelCollection != null;
-				new BarrelJsonReader().readBarrelsFromFile(executionData.barrelCollection, filePath, doAppend);
+				if (doAppend) {
+					executionData.barrelCollection = ensureCollection(executionData.barrelCollection);
+					new BarrelJsonReader().readBarrelsFromFile(executionData.barrelCollection, filePath, true);
+				}
+				else {
+					executionData.barrelCollection = new BarrelJsonReader().readBarrelsFromFile(filePath);
+				}
 				break;
 			case CARS:
-				assert executionData.carCollection != null;
-				new CarJsonReader().readCarsFromFile(executionData.carCollection, filePath, doAppend);
+				if (doAppend) {
+					executionData.carCollection = ensureCollection(executionData.carCollection);
+					new CarJsonReader().readCarsFromFile(executionData.carCollection, filePath, true);
+				}
+				else {
+					executionData.carCollection = new CarJsonReader().readCarsFromFile(filePath);
+				}
 				break;
 			case STUDENTS:
-				assert executionData.studentCollection != null;
-				new StudentJsonReader().readStudentsFromFile(executionData.studentCollection, filePath, doAppend);
+				if (doAppend) {
+					executionData.studentCollection = ensureCollection(executionData.studentCollection);
+					new StudentJsonReader().readStudentsFromFile(executionData.studentCollection, filePath, true);
+				}
+				else {
+					executionData.studentCollection = new StudentJsonReader().readStudentsFromFile(filePath);
+				}
 				break;
 			default:
 				throw new IllegalArgumentException(TranslationManager.getUnknownModelTypeError());
@@ -48,15 +68,25 @@ public class ImportModelExecutor extends BaseExecutor {
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		String optionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.IMPORT.shortOpt);
-		if (optionValue == null) {
-			throw new IllegalArgumentException(TranslationManager.getImportOptionValueRequiredError());
+		if (optionValue == null || optionValue.isBlank()) {
+			lastError = TranslationManager.getImportOptionValueRequiredError();
+			return false;
 		}
 
 		if (!Files.exists(Path.of(optionValue)) || !Files.isRegularFile(Path.of(optionValue))) {
-			throw new IllegalArgumentException(TranslationManager.getImportOptionInvalidPathError());
+			lastError = TranslationManager.getImportOptionInvalidPathError();
+			return false;
 		}
 
 		return true;
+	}
+
+	private <T> Collection<T> ensureCollection(Collection<T> collection) {
+		if (collection != null) {
+			return collection;
+		}
+
+		return new ArrayList<>();
 	}
 
 }
