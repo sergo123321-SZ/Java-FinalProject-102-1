@@ -9,33 +9,29 @@ import ru.aston.model.Student;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public final class ManualModelInputReader {
 	private ManualModelInputReader() {
 	}
 
 	public static Collection<Car> readCars(@NotNull Scanner scanner, int count) {
-		Collection<Car> result = new ArrayList<>(count);
-		for (int i = 0; i < count; i++) {
-			result.add(readCar(scanner, i + 1));
-		}
-		return result;
+		return IntStream.range(0, count)
+				.mapToObj(i -> readCar(scanner, i + 1))
+				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
 	}
 
 	public static Collection<Student> readStudents(@NotNull Scanner scanner, int count) {
-		Collection<Student> result = new ArrayList<>(count);
-		for (int i = 0; i < count; i++) {
-			result.add(readStudent(scanner, i + 1));
-		}
-		return result;
+		return IntStream.range(0, count)
+				.mapToObj(i -> readStudent(scanner, i + 1))
+				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
 	}
 
 	public static Collection<Barrel> readBarrels(@NotNull Scanner scanner, int count) {
-		Collection<Barrel> result = new ArrayList<>(count);
-		for (int i = 0; i < count; i++) {
-			result.add(readBarrel(scanner, i + 1));
-		}
-		return result;
+		return IntStream.range(0, count)
+				.mapToObj(i -> readBarrel(scanner, i + 1))
+				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
 	}
 
 	public static Car readCar(@NotNull Scanner scanner, int index) {
