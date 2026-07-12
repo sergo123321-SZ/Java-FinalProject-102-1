@@ -11,6 +11,7 @@ import ru.aston.model.Barrel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class BarrelJsonReader {
@@ -20,6 +21,18 @@ public class BarrelJsonReader {
 		this.objectMapper = new ObjectMapper();
 		this.objectMapper.addMixIn(Barrel.class, MixinUtils.BarrelMixIn.class);
 		this.objectMapper.addMixIn(Barrel.Builder.class, MixinUtils.BarrelBuilderMixIn.class);
+	}
+
+	public void readBarrelsFromFile(Collection<Barrel> collection, final String filePath, boolean append) {
+		if (append) {
+			if (collection == null) {
+				collection = new LinkedList<>();
+			}
+			addBarrelsToCollection(collection, filePath);
+		}
+		else {
+			collection = readBarrelsFromFile(filePath);
+		}
 	}
 
 	public void addBarrelsToCollection(final Collection<Barrel> collection, final String filePath) {

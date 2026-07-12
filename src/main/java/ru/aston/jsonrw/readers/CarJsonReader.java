@@ -11,6 +11,7 @@ import ru.aston.model.Car;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CarJsonReader {
@@ -20,6 +21,18 @@ public class CarJsonReader {
 		this.objectMapper = new ObjectMapper();
 		this.objectMapper.addMixIn(Car.class, MixinUtils.CarMixIn.class);
 		this.objectMapper.addMixIn(Car.Builder.class, MixinUtils.CarBuilderMixIn.class);
+	}
+
+	public void readCarsFromFile(Collection<Car> collection, final String filePath, boolean append) {
+		if (append) {
+			if (collection == null) {
+				collection = new LinkedList<>();
+			}
+			addCarsToCollection(collection, filePath);
+		}
+		else {
+			collection = readCarsFromFile(filePath);
+		}
 	}
 
 	public void addCarsToCollection(final Collection<Car> collection, final String filePath) {
