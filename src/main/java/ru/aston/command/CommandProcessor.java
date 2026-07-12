@@ -12,20 +12,21 @@ import java.util.Locale;
 public class CommandProcessor {
 	private final CommandLineParser parser = new DefaultParser();
 	private final HelpFormatter formatter = new HelpFormatter();
-	private final Options options = new Options();
 	private final CascadedExecutor executor = new CascadedExecutor();
 	private static final String HELP_SYNTAX = "--help";
+	private Options options;
 
 	public CommandProcessor() {
-		for (CommandStep step : CommandStep.values()) {
-			options.addOption(Option.builder(step.shortOpt)
-					.longOpt(step.longOpt)
-					.hasArg(step.hasArg)
-					.desc(getDescription(step))
-					.build());
-		}
-		executor.addExecutor(new ModelSelectionExecutor()).addExecutor(new ModelGenerationExecutor())
-				.addExecutor(new ModelDisplayExecutor());
+		initializeOptions();
+		executor.addExecutor(new ModelSelectionExecutor())
+				.addExecutor(new ModelGenerationExecutor())
+				.addExecutor(new ModelDisplayExecutor())
+				.addExecutor(new ModelLengthExecutor())
+				.addExecutor(new ModelResetExecutor())
+				.addExecutor(new WriteModeSelectExecutor())
+				.addExecutor(new ModelSortExecutor())
+				.addExecutor(new ExportModelExecutor())
+				.addExecutor(new ImportModelExecutor());
 	}
 
 	public void executeCommands(String[] commands, ExecutionData executionData) {
@@ -47,6 +48,7 @@ public class CommandProcessor {
 					case "ru" -> Locale.of("ru");
 					default -> Locale.getDefault();
 				});
+				initializeOptions();
 			}
 			if (!executor.checkOptions(cmd)) {
 				System.out.println(TranslationManager.getValidationError(executor.getLastError()));
@@ -100,6 +102,17 @@ public class CommandProcessor {
 		};
 	}
 	// @formatter:on
+
+	private void initializeOptions() {
+		options = new Options();
+		for (CommandStep step : CommandStep.values()) {
+			options.addOption(Option.builder(step.shortOpt)
+					.longOpt(step.longOpt)
+					.hasArg(step.hasArg)
+					.desc(getDescription(step))
+					.build());
+		}
+	}
 
 	private @NotNull String getAcceptableOptionsString(@NotNull CommandStep step) {
 		if (step.acceptableVariants.isEmpty()) {

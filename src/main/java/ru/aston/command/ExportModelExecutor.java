@@ -11,6 +11,7 @@ import ru.aston.jsonrw.writers.CarJsonWriter;
 import ru.aston.jsonrw.writers.StudentJsonWriter;
 
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -45,12 +46,30 @@ public class ExportModelExecutor extends BaseExecutor {
 	@Override
 	public boolean checkOptions(@NotNull CommandLine commandLine) {
 		String optionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.EXPORT.shortOpt);
-		if (optionValue == null) {
+		if (optionValue == null || optionValue.isBlank()) {
 			lastError = TranslationManager.getExportOptionValueRequiredError();
 			return false;
 		}
 
-		if (!Files.exists(Path.of(optionValue)) || !Files.isRegularFile(Path.of(optionValue))) {
+		Path path;
+		try {
+			path = Path.of(optionValue).toAbsolutePath().normalize();
+		}
+		catch (InvalidPathException e) {
+			lastError = TranslationManager.getExportOptionInvalidPathError();
+			return false;
+		}
+
+		if (Files.exists(path)) {
+			if (!Files.isRegularFile(path) || !Files.isWritable(path)) {
+				lastError = TranslationManager.getExportOptionInvalidPathError();
+				return false;
+			}
+			return true;
+		}
+
+		Path parent = path.getParent();
+		if (parent == null || !Files.exists(parent) || !Files.isDirectory(parent) || !Files.isWritable(parent)) {
 			lastError = TranslationManager.getExportOptionInvalidPathError();
 			return false;
 		}
