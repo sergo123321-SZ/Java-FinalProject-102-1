@@ -14,7 +14,7 @@ public class InteractiveConsoleApplication {
 
 		CommandProcessor p = new CommandProcessor();
 		Scanner scanner = new Scanner(System.in);
-		System.out.println(TranslationManager.getHelpText("1.0", "TeamName"));
+		System.out.println(TranslationManager.getHelpText());
 		ExecutionData executionData = new ExecutionData();
 		while (!executionData.isExitRequested) {
 			System.out.print("> ");
