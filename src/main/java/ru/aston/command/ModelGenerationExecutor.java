@@ -43,6 +43,10 @@ public class ModelGenerationExecutor extends BaseExecutor {
 		try {
 			String createOptionValue = commandLine.getOptionValue(CommandProcessor.CommandStep.CREATE.shortOpt);
 			size = Integer.parseInt(createOptionValue);
+			if (size <= 0) {
+				lastError = TranslationManager.getCreateOptionInvalidValueError();
+				return false;
+			}
 		}
 		catch (Exception e) {
 			lastError = TranslationManager.getCreateOptionInvalidValueError();
