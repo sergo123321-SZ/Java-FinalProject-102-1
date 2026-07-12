@@ -120,7 +120,7 @@ public class CommandProcessor {
 	enum CommandStep {
 		EXIT("Q", "exit", false),
 		HELP("H", "help", false),
-		LANGUAGE(null, "lang", true),
+		LANGUAGE("lang", "lang", true),
 		MODEL("M", "model", true),
 		RESET("R", "reset", false, List.of(MODEL)),
 		LENGTH("L", "length", false, List.of(MODEL)),
