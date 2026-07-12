@@ -21,6 +21,15 @@ public class StudentJsonWriter {
 		this.objectMapper.addMixIn(Student.Builder.class, MixinUtils.StudentBuilderMixIn.class);
 	}
 
+	public void writeStudentsToFile(final Collection<Student> students, final String filePath, boolean append) {
+		if (append) {
+			appendStudentsToFile(students, filePath);
+		}
+		else {
+			writeStudentsToFile(students, filePath);
+		}
+	}
+
 	public void writeStudentsToFile(final Collection<Student> students, final String filePath) {
 		if (students == null || filePath == null || filePath.isBlank()) {
 			return;
