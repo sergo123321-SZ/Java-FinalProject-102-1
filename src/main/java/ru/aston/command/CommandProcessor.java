@@ -7,6 +7,7 @@ import ru.aston.core.AppConstants;
 import ru.aston.core.TranslationManager;
 
 import java.util.List;
+import java.util.Locale;
 
 /// \todo translate all strings
 public class CommandProcessor {
@@ -40,6 +41,14 @@ public class CommandProcessor {
 				formatter.printHelp(HELP_SYNTAX, options);
 				return;
 			}
+			if (cmd.hasOption(CommandStep.LANGUAGE.longOpt)) {
+				String languageId = cmd.getOptionValue(CommandStep.LANGUAGE.longOpt).toLowerCase();
+				TranslationManager.setLocale(switch (languageId) {
+					case "en" -> Locale.ENGLISH;
+					case "ru" -> Locale.of("ru");
+					default -> Locale.getDefault();
+				});
+			}
 			if (!executor.checkOptions(cmd)) {
 				System.out.println("Ошибка валидации: " + executor.getLastError());
 				formatter.printHelp(HELP_SYNTAX, options);
@@ -58,6 +67,7 @@ public class CommandProcessor {
 		return switch (step) {
 			case EXIT -> TranslationManager.getExitOptionDescription();
 			case HELP -> TranslationManager.getHelpText("1.0", "TeamName");
+			case LANGUAGE -> TranslationManager.getLanguageOptionDescription();
 			case MODEL -> TranslationManager.getModelOptionDescription(getAcceptableOptionsString(step));
 			case RESET -> TranslationManager.getResetOptionDescription(
 					getRequiredStepsString(step)
@@ -111,6 +121,7 @@ public class CommandProcessor {
 	enum CommandStep {
 		EXIT("Q", "exit", false),
 		HELP("H", "help", false),
+		LANGUAGE(null, "lang", true),
 		MODEL("M", "model", true),
 		RESET("R", "reset", false, List.of(MODEL)),
 		LENGTH("L", "length", false, List.of(MODEL)),

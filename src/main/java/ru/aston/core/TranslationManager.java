@@ -40,6 +40,10 @@ public class TranslationManager {
 		return getString("option.exit.description");
 	}
 
+	public static String getLanguageOptionDescription() {
+		return getString("option.language.description");
+	}
+
 	public static String getModelOptionDescription(String acceptableOptions) {
 		return getString("option.model.description", acceptableOptions);
 	}
