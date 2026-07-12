@@ -1,12 +1,21 @@
 package ru.aston.model;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.aston.core.TranslationManager;
+
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class StudentTest {
+
+	@BeforeAll
+	static void setUp() {
+		TranslationManager.setLocale(Locale.of("ru"));
+	}
 
 	@Test
 	@DisplayName("equals: должен возвращать true при сравнении студента с самим собой")
