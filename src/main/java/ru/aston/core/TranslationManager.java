@@ -51,12 +51,12 @@ public class TranslationManager {
 		return MessageFormat.format(resourceBundle.getString(key), args);
 	}
 
-	public static String getHelpText(String version, String team) {
-		return getString("helpText", version, team);
+	public static String getHelloText() {
+		return getString("helloText", version, authors);
 	}
 
 	public static String getHelpText() {
-		return getHelpText(version, authors);
+		return getString("option.help.description");
 	}
 
 	public static String getExitOptionDescription() {

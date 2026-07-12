@@ -49,6 +49,7 @@ public class CommandProcessor {
 					default -> Locale.getDefault();
 				});
 				initializeOptions();
+				System.out.println(TranslationManager.getHelloText());
 			}
 			if (!executor.checkOptions(cmd)) {
 				System.out.println(TranslationManager.getValidationError(executor.getLastError()));
