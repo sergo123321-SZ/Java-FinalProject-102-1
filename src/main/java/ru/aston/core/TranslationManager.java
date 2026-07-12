@@ -1,9 +1,13 @@
 package ru.aston.core;
 
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
+import java.nio.charset.StandardCharsets;
 
 
 public class TranslationManager {
@@ -11,6 +15,21 @@ public class TranslationManager {
 
 	private static Locale currentLocale = Locale.getDefault();
 	private static ResourceBundle resourceBundle = loadResources();
+	private static String version;
+	private static String authors;
+	static {
+		Properties properties = new Properties();
+		try (InputStream input = TranslationManager.class.getClassLoader().getResourceAsStream("app.properties")) {
+			if (input != null) {
+				properties.load(new InputStreamReader(input, StandardCharsets.UTF_8));
+				version = properties.getProperty("app.version");
+				authors = properties.getProperty("app.authors");
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	private TranslationManager() {
 	}
@@ -34,6 +53,10 @@ public class TranslationManager {
 
 	public static String getHelpText(String version, String team) {
 		return getString("helpText", version, team);
+	}
+
+	public static String getHelpText() {
+		return getHelpText(version, authors);
 	}
 
 	public static String getExitOptionDescription() {
