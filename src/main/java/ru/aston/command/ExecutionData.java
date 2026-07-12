@@ -7,6 +7,7 @@ import ru.aston.model.Car;
 import ru.aston.model.Student;
 
 import java.util.Collection;
+import java.util.Scanner;
 
 
 public class ExecutionData {
@@ -21,4 +22,5 @@ public class ExecutionData {
 	public AppConstants.ModelType modelType = null;
 	public AppConstants.SortType sortType = null;
 	public AppConstants.WriteMode writeMode = null;
+	public Scanner scanner = null;
 }
