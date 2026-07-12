@@ -91,6 +91,10 @@ public class TranslationManager {
 		return getString("option.manual.description", requiredSteps);
 	}
 
+	public static String getCountOptionDescription(String requiredSteps) {
+		return getString("option.count.description", requiredSteps);
+	}
+
 	public static String getSortOptionDescription(
 			String ascVariantName,
 			String descVariantName,
@@ -178,6 +182,10 @@ public class TranslationManager {
 
 	public static String getManualOptionInvalidValueError() {
 		return getString("error.option.manual.invalid-value");
+	}
+
+	public static String getCountOptionInvalidValueError() {
+		return getString("error.option.count.invalid-value");
 	}
 
 	public static String getSortOptionRequiredError() {
@@ -422,5 +430,17 @@ public class TranslationManager {
 
 	public static String getManualPromptBarrelMaterial() {
 		return getString("output.manual.prompt.barrel.material");
+	}
+
+	public static String getCounterMethodPrompt() {
+		return getString("output.counter.method.prompt");
+	}
+
+	public static String getCounterMethodInvalidError() {
+		return getString("error.counter.method.invalid");
+	}
+
+	public static String getCounterResultMessage(long count) {
+		return getString("output.counter.result", count);
 	}
 }

@@ -21,6 +21,7 @@ public class CommandProcessor {
 		executor.addExecutor(new ModelSelectionExecutor())
 				.addExecutor(new ModelGenerationExecutor())
 				.addExecutor(new ManualModelInputExecutor())
+				.addExecutor(new ModelCountExecutor())
 				.addExecutor(new ModelDisplayExecutor())
 				.addExecutor(new ModelLengthExecutor())
 				.addExecutor(new ModelResetExecutor())
@@ -93,6 +94,9 @@ public class CommandProcessor {
 			case MANUAL -> TranslationManager.getManualOptionDescription(
 					getRequiredStepsString(step)
 			);
+			case COUNT -> TranslationManager.getCountOptionDescription(
+					getRequiredStepsString(step)
+			);
 			case EXPORT -> TranslationManager.getExportOptionDescription(
 					getRequiredStepsString(step)
 			);
@@ -146,6 +150,7 @@ public class CommandProcessor {
 		SORT("S", "sort", true, List.of(MODEL)),
 		CREATE("C", "create", true, List.of(MODEL)),
 		MANUAL("manual", "manual", true, List.of(MODEL)),
+		COUNT("count", "count", true, List.of(MODEL)),
 		EXPORT("E", "export", true, List.of(MODEL)),
 		IMPORT("I", "import", true, List.of(MODEL)),
 		WRITE_MODE("W", "write-mode", true);
