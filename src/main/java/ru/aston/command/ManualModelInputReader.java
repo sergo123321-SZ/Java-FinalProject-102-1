@@ -1,12 +1,12 @@
 package ru.aston.command;
 
 import org.jetbrains.annotations.NotNull;
+import ru.aston.collection.CustomCollection;
 import ru.aston.core.TranslationManager;
 import ru.aston.model.Barrel;
 import ru.aston.model.Car;
 import ru.aston.model.Student;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -19,19 +19,19 @@ public final class ManualModelInputReader {
 	public static Collection<Car> readCars(@NotNull Scanner scanner, int count) {
 		return IntStream.range(0, count)
 				.mapToObj(i -> readCar(scanner, i + 1))
-				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
+				.collect(Collectors.toCollection(CustomCollection::new));
 	}
 
 	public static Collection<Student> readStudents(@NotNull Scanner scanner, int count) {
 		return IntStream.range(0, count)
 				.mapToObj(i -> readStudent(scanner, i + 1))
-				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
+				.collect(Collectors.toCollection(CustomCollection::new));
 	}
 
 	public static Collection<Barrel> readBarrels(@NotNull Scanner scanner, int count) {
 		return IntStream.range(0, count)
 				.mapToObj(i -> readBarrel(scanner, i + 1))
-				.collect(Collectors.toCollection(() -> new ArrayList<>(count)));
+				.collect(Collectors.toCollection(CustomCollection::new));
 	}
 
 	public static Car readCar(@NotNull Scanner scanner, int index) {
