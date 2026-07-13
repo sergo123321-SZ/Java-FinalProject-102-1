@@ -4,20 +4,18 @@ package ru.aston.command;
 import org.apache.commons.cli.CommandLine;
 import org.jetbrains.annotations.NotNull;
 
+import ru.aston.collection.CustomCollection;
 import ru.aston.core.AppConstants.WriteMode;
 import ru.aston.core.TranslationManager;
 import ru.aston.jsonrw.readers.BarrelJsonReader;
 import ru.aston.jsonrw.readers.CarJsonReader;
 import ru.aston.jsonrw.readers.StudentJsonReader;
-import ru.aston.model.Barrel;
-import ru.aston.model.Car;
-import ru.aston.model.Student;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class ImportModelExecutor extends BaseExecutor {
@@ -38,7 +36,7 @@ public class ImportModelExecutor extends BaseExecutor {
 					new BarrelJsonReader().readBarrelsFromFile(executionData.barrelCollection, filePath, true);
 				}
 				else {
-					executionData.barrelCollection = new BarrelJsonReader().readBarrelsFromFile(filePath);
+					executionData.barrelCollection = toCustomCollection(new BarrelJsonReader().readBarrelsFromFile(filePath));
 				}
 				break;
 			case CARS:
@@ -47,7 +45,7 @@ public class ImportModelExecutor extends BaseExecutor {
 					new CarJsonReader().readCarsFromFile(executionData.carCollection, filePath, true);
 				}
 				else {
-					executionData.carCollection = new CarJsonReader().readCarsFromFile(filePath);
+					executionData.carCollection = toCustomCollection(new CarJsonReader().readCarsFromFile(filePath));
 				}
 				break;
 			case STUDENTS:
@@ -56,7 +54,7 @@ public class ImportModelExecutor extends BaseExecutor {
 					new StudentJsonReader().readStudentsFromFile(executionData.studentCollection, filePath, true);
 				}
 				else {
-					executionData.studentCollection = new StudentJsonReader().readStudentsFromFile(filePath);
+					executionData.studentCollection = toCustomCollection(new StudentJsonReader().readStudentsFromFile(filePath));
 				}
 				break;
 			default:
@@ -82,11 +80,18 @@ public class ImportModelExecutor extends BaseExecutor {
 	}
 
 	private <T> Collection<T> ensureCollection(Collection<T> collection) {
-		if (collection != null) {
+		if (collection instanceof CustomCollection<?>) {
 			return collection;
 		}
+		if (collection != null) {
+			return toCustomCollection(collection);
+		}
 
-		return new ArrayList<>();
+		return new CustomCollection<>();
+	}
+
+	private <T> Collection<T> toCustomCollection(@NotNull Collection<T> source) {
+		return source.stream().collect(Collectors.toCollection(CustomCollection::new));
 	}
 
 }
