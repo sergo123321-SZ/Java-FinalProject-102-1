@@ -22,4 +22,22 @@ public class CustomCollection<T> extends AbstractCollection<T> {
 	public int size() {
 		return size;
 	}
+
+	@Override
+	public boolean add(T item) {
+		CustomNode<T> tailBefore = tail;
+		CustomNode<T> newNode = new CustomNode<>(item, tailBefore, null);
+
+		tail = newNode;
+		if (tailBefore == null) {
+			head = newNode;
+		}
+		else {
+			tailBefore.next = newNode;
+		}
+
+		++size;
+
+		return true;
+	}
 }
