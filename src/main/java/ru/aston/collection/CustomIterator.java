@@ -11,12 +11,6 @@ public class CustomIterator<T> implements ListIterator<T> {
 	CustomNode<T> lastReturned;
 	int nextIndex = 0;
 
-	/**
-	 * The special state, indicates the last call 1 - next() or -1 - previous() 0 -
-	 * nothing
-	 */
-	private int lastCall = 0;
-
 	CustomIterator(CustomCollection<T> collection, CustomNode<T> prev, CustomNode<T> next, int nextIndex) {
 		this.collection = collection;
 		this.next = next;
@@ -47,8 +41,6 @@ public class CustomIterator<T> implements ListIterator<T> {
 
 		nextIndex++;
 
-		lastCall = 1;
-
 		return lastReturned.item;
 	}
 
@@ -70,8 +62,6 @@ public class CustomIterator<T> implements ListIterator<T> {
 
 		nextIndex--;
 
-		lastCall = -1;
-
 		return lastReturned.item;
 	}
 
@@ -87,15 +77,36 @@ public class CustomIterator<T> implements ListIterator<T> {
 
 	@Override
 	public void remove() {
-		assert collection.size <= 0;
-
 		if (lastReturned == null) {
-			throw new IllegalStateException("Unable to remove item. Call next() or previous() before calling remove()");
+			throw new IllegalStateException("Unable to remove from empty iterator");
 		}
 
+		CustomNode<T> left = lastReturned.prev;
+		if (left != null) {
+			left.next = lastReturned.next;
+		}
+		else {
+			collection.head = lastReturned.next;
+		}
 
-		lastReturned = null;
+		CustomNode<T> right = lastReturned.next;
+		if (right != null) {
+			right.prev = left;
+		}
+		else {
+			collection.tail = left;
+		}
+
+		if (lastReturned == prev) {
+			prev = left;
+			--nextIndex;
+		}
+		else {
+			next = right;
+		}
+
 		--collection.size;
+		lastReturned = null;
 	}
 
 	@Override
@@ -128,6 +139,5 @@ public class CustomIterator<T> implements ListIterator<T> {
 		++collection.size;
 
 		lastReturned = null;
-		lastCall = 0;
 	}
 }
