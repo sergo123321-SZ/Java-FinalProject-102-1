@@ -39,6 +39,10 @@ public class TranslationManager {
 		resourceBundle = loadResources();
 	}
 
+	public static Locale getLocale() {
+		return currentLocale;
+	}
+
 	private static ResourceBundle loadResources() {
 		return ResourceBundle.getBundle(TRANSLATIONS_BASE_NAME, currentLocale);
 	}

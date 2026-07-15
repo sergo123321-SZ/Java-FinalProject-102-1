@@ -1,14 +1,14 @@
 package ru.aston.randomgenerator;
 
 import net.datafaker.Faker;
+import ru.aston.core.TranslationManager;
 import ru.aston.model.Barrel;
 
 import java.util.List;
 import java.util.Locale;
 
 public class BarrelRandomGenerator {
-	/// \todo use locale from \c TranslationManager
-	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
+	private static final Faker faker = new Faker(TranslationManager.getLocale());
 
 	public static List<Barrel> generate(int size) {
 		return faker.collection(() -> Barrel.builder()
