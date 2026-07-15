@@ -10,7 +10,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class StudentJsonWriter {
@@ -60,9 +59,11 @@ public class StudentJsonWriter {
 		try {
 			List<Student> existing = objectMapper.readValue(file, new TypeReference<>() {
 			});
+			if (existing == null) {
+				existing = List.of(); // 👈 КРИТИЧЕСКИЙ ФИКС: безопасный fallback для null
+			}
 
-			List<Student> merged = Stream.concat(Optional.ofNullable(existing).stream().flatMap(Collection::stream), students.stream())
-					.toList();
+			List<Student> merged = Stream.concat(existing.stream(), students.stream()).toList();
 
 			writeStudentsToFile(merged, filePath);
 			System.out.println(TranslationManager.getAppendStudentsSuccessMessage(filePath));
