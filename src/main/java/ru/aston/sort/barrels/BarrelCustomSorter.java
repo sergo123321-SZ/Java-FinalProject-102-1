@@ -25,8 +25,6 @@ public class BarrelCustomSorter implements BarrelSorter {
 
 		volumeSort(evenValueTrim, 0, evenValueTrim.length - 1, orderType);
 
-
-		// todo как будто не работает
 		k = 0;
 		for (int i = 0; i < barrels.length; i++) {
 			if (barrels[i].getVolume() % 2 == 0) {
