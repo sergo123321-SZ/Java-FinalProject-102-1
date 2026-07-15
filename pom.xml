@@ -4,7 +4,7 @@
 
     <groupId>ru.aston</groupId>
     <artifactId>FinalJavaProject</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
