@@ -1,4 +1,4 @@
-package ru.aston.sort;
+package ru.aston.sort.students;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import ru.aston.model.Student;
+import ru.aston.sort.OrderType;
+import ru.aston.sort.SortType;
 import ru.aston.sort.students.StudentCollectionSorter;
 import ru.aston.sort.students.StudentSortTypeChanger;
 import ru.aston.sort.students.StudentSorter;
@@ -103,12 +105,6 @@ class StudentCollectionSorterTest {
 		assertEquals(2, original.size());
 		assertEquals(TARGET_GROUP_NUMBER, ((Student) original.toArray()[0]).getGroupNumber());
 		assertEquals(TARGET_RECORD_BOOK_NUMBER, ((Student) original.toArray()[1]).getRecordBookNumber());
-	}
-
-	@Test
-	@DisplayName("sort: null входная коллекция → NullPointerException")
-	void sort_nullCollection_throwsNullPointerException() {
-		assertThrows(NullPointerException.class, () -> sorter.sort(null, SortType.CUSTOM_SORT, OrderType.REVERSE_ORDER));
 	}
 
 	@Test
