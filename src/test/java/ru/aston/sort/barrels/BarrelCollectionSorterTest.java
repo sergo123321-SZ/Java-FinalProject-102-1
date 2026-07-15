@@ -67,10 +67,11 @@ class BarrelCollectionSorterTest {
 			assertEquals(b1, sorted[2], "100.0");
 		}
 
+		// todo
 		// @Test
 		// @DisplayName("sort: CUSTOM_SORT с NATURAL_ORDER — использует compareTo()")
 		// void customSortNaturalOrder_usesNaturalOrder() {
-		// Barrel b1 = new Barrel(99, "acid", "glass");
+		// Barrel b1 = new Barrel(100, "acid", "glass");
 		// Barrel b2 = new Barrel(100, "water", "steel");
 		// Barrel b3 = new Barrel(101, "oil", "plastic");
 		// Collection<Object> input = Arrays.asList(b1, b2, b3);

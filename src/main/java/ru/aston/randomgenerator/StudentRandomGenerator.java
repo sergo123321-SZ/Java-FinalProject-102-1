@@ -11,6 +11,10 @@ public class StudentRandomGenerator {
 	private static final Faker faker = new Faker(Locale.forLanguageTag("ru"));
 
 	public static List<Student> generate(int size) {
+		if (size < 0) {
+			throw new IllegalArgumentException("size must be positive");
+		}
+
 		return faker.collection(() -> Student.builder()
 				.setGroupNumber(faker.regexify("[А-Я]{2}-\\d{2}"))
 				.setAverageGrade(Math.round(faker.number().randomDouble(2, 2, 5) * 100.0) / 100.0)
