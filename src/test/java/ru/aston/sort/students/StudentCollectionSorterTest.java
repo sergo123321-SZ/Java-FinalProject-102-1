@@ -98,7 +98,7 @@ class StudentCollectionSorterTest {
 		Student s2 = new Student(TARGET_GROUP_NUMBER, 4.0, TARGET_RECORD_BOOK_NUMBER);
 		Collection<Object> original = new ArrayList<>(List.of(s1, s2));
 
-		sorter.sort(original, SortType.MERGE_SORT, OrderType.NATURAL_ORDER);
+		sorter.sort(original, SortType.CUSTOM_SORT, OrderType.NATURAL_ORDER);
 
 		System.out.println(original);
 		// проверяем, что original не изменился
