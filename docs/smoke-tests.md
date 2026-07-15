@@ -18,7 +18,7 @@
 ### 1.1 A
 
 ```bash
-printf '%s\n' '--model=CARS --write-mode=A' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --write-mode=A' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -28,7 +28,7 @@ printf '%s\n' '--model=CARS --write-mode=A' 'Q' | java -jar target/FinalJavaProj
 ### 1.2 W
 
 ```bash
-printf '%s\n' '--model=CARS --write-mode=W' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --write-mode=W' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -38,7 +38,7 @@ printf '%s\n' '--model=CARS --write-mode=W' 'Q' | java -jar target/FinalJavaProj
 ## 2) Import: невалидный путь
 
 ```bash
-printf '%s\n' '--model=CARS --import=/tmp/nonexistent.json' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --import=/tmp/nonexistent.json' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -49,7 +49,7 @@ printf '%s\n' '--model=CARS --import=/tmp/nonexistent.json' 'Q' | java -jar targ
 
 ```bash
 printf '[{"power":120,"model":"TestCarA","productionYear":2010},{"power":180,"model":"TestCarB","productionYear":2015}]\n' > /tmp/cars_import_test.json
-printf '%s\n' '--model=CARS --import=/tmp/cars_import_test.json' '--model=CARS --display' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --import=/tmp/cars_import_test.json' '--model=CARS --display' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -59,7 +59,7 @@ printf '%s\n' '--model=CARS --import=/tmp/cars_import_test.json' '--model=CARS -
 ## 4) Create: отрицательная длина
 
 ```bash
-printf '%s\n' '--model=CARS --create=-1 --display' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --create=-1 --display' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -69,7 +69,7 @@ printf '%s\n' '--model=CARS --create=-1 --display' 'Q' | java -jar target/FinalJ
 ## 5) Manual input: базовый сценарий
 
 ```bash
-printf '%s\n' '--model=CARS --manual=1 --display' 'ManualCar' '150' '2018' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --manual=1 --display' 'ManualCar' '150' '2018' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -79,7 +79,7 @@ printf '%s\n' '--model=CARS --manual=1 --display' 'ManualCar' '150' '2018' 'Q' |
 ## 6.1) Multithread counter из CLI (manual + count)
 
 ```bash
-printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'ARRAY' 'CarA' '100' '2015' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'ARRAY' 'CarA' '100' '2015' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -88,7 +88,7 @@ printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '12
 
 ## 6.2) Дополнительный check для count
 ```bash
-printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'SUBLIST' 'CarA' '100' '2015' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'SUBLIST' 'CarA' '100' '2015' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
@@ -97,7 +97,7 @@ printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '12
 
 ## 6.3) Multithread counter из CLI (manual + count) с методом STREAM
 ```bash
-printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'STREAM' 'CarA' '100' '2015' 'Q' | java -jar target/FinalJavaProject-1.0.jar
+printf '%s\n' '--model=CARS --manual=3 --count=2' 'CarA' '100' '2015' 'CarB' '120' '2018' 'CarA' '100' '2015' 'STREAM' 'CarA' '100' '2015' 'Q' | java -jar ../target/FinalJavaProject-1.5.jar
 ```
 
 Ожидаемо:
